@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -lib "unisims_ver" -lib "unimacro_ver" -lib "xilinxcorelib_ver" -lib "secureip" -o "/home/ise/Desktop/labs/lab1/fpConvert_TB_isim_beh.exe" -prj "/home/ise/Desktop/labs/lab1/fpConvert_TB_beh.prj" "work.fpConvert_TB" "work.glbl" 
