@@ -22,23 +22,28 @@ module round(
     input [2:0] exponent,
     input [3:0] significand,
     input fifthBit,
-    output [2:0] final_exponent,
-    output [3:0] final_significand
+    output reg [2:0] final_exponent,
+    output reg [3:0] final_significand
     );
 	 
 	 always @ * begin
 		if (fifthBit == 1) begin
-			if (significand == 4'b111) begin
-				significand = (significand >> 1); //TODO: double check logic
-				exponent <= exponent + 1;	// TODO: make sure exponent doesn't overflow
+			if (significand == 4'b1111) begin
+			$display("hi");
+				if (exponent == 3'b111) begin
+					final_significand <= significand;
+					final_exponent <= exponent;
+				end
+				else begin
+					final_significand = (significand >> 1);
+					final_exponent <= exponent + 1;
+				end
 			end
 			
 			else begin
-				significand <= exponent + 1;
+				final_significand <= significand + 1;
+				final_exponent <= exponent;
 			end
-			
-			final_exponent <= exponent;
-			final_significand <= significand;
 		end
 		
 		else begin
