@@ -29,7 +29,6 @@ module round(
 	 always @ * begin
 		if (fifthBit == 1) begin
 			if (significand == 4'b1111) begin
-			$display("hi");
 				if (exponent == 3'b111) begin
 					final_significand <= significand;
 					final_exponent <= exponent;
