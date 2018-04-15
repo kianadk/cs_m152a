@@ -52,6 +52,10 @@ module converter_TB;
 	end
 	
 	always begin
+	
+		#10 twosComp = 0;
+		#10 $display("%d converted to %d", twosComp, $signed((-1 ** sign) * significand * (2 ** exponent)));
+		
 		#10 twosComp = 1;
 		#10 $display("%d converted to %d", twosComp, $signed((-1 ** sign) * significand * (2 ** exponent)));
 
@@ -61,7 +65,17 @@ module converter_TB;
 		#10 twosComp = 100;
 		#10 $display("%d converted to %d", twosComp, $signed((-1 ** sign) * significand * (2 ** exponent)));
 
-
+		#10 twosComp = 2047; // largest 2's Complement number
+		#10 $display("%d converted to %d", twosComp, $signed((-1 ** sign) * significand * (2 ** exponent)));
+		
+		#10 twosComp = 2046;
+		#10 $display("%d converted to %d", twosComp, $signed((-1 ** sign) * significand * (2 ** exponent)));
+		
+		#10 twosComp = -2048; // smallest 2's Complement number
+		#10 $display("%d converted to %d", twosComp, $signed((-1 ** sign) * significand * (2 ** exponent)));
+		
+		#10 twosComp = -2047;
+		#10 $display("%d converted to %d", twosComp, $signed((-1 ** sign) * significand * (2 ** exponent)));
 	end
       
 endmodule
