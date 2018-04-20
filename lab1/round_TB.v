@@ -55,10 +55,10 @@ module round_TB;
 	end
 	
 	always begin
+		#10 fifthBit = 0; //no rounding
 		#10 fifthBit = 1;	// just increment significand
-		#10 significand = 15;	//significand overflows => shift significand right one, increment exponent
+		#10 significand = 15; //significand overflows => shift & increment significand, increment exponent
 		#10 exponent = 7; // exponent and significand overflow => use largest possible floating point
-		#10 significand = 0; // exponent overflows => just increment significand
 	end
       
 endmodule

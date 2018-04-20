@@ -62,20 +62,15 @@ module FPCVT_TB;
 		#10 D = -1;
 		#10 $display("%d converted to %d", D, $signed((-1 ** S) * F * (2 ** E)));
 
-		#10 D = 100;
-		#10 $display("%d converted to %d", D, $signed((-1 **S) * F * (2 ** E)));
-
 		#10 D = 2047; // largest 2's Complement number
 		#10 $display("%d converted to %d", D, $signed((-1 ** S) * F * (2 ** E)));
-		
-		#10 D = 2046;
-		#10 $display("%d converted to %d", D, $signed((-1 ** S) * F * (2 ** E)));
-		
+
 		#10 D = -2048; // smallest 2's Complement number
 		#10 $display("%d converted to %d", D, $signed((-1 ** S) * F * (2 ** E)));
 		
-		#10 D = -2047;
+		#10 D = 31;
 		#10 $display("%d converted to %d", D, $signed((-1 ** S) * F * (2 ** E)));
+
 	end
       
 endmodule

@@ -28,8 +28,8 @@ module fpConvert_TB;
 	reg [10:0] number;
 
 	// Outputs
-	wire significand;
-	wire exponent;
+	wire [3:0] significand;
+	wire [2:0] exponent;
 	wire fifthBit;
 
 	// Instantiate the Unit Under Test (UUT)
@@ -52,7 +52,14 @@ module fpConvert_TB;
 	end
 	
 	always begin
-		#10 number = 5;
+		#10 number = 8;
+		#10 number = 16;
+		#10 number = 32;
+		#10 number = 64;
+		#10 number = 128;
+		#10 number = 256;
+		#10 number = 512;
+		#10 number = 1024;
 	end
       
 endmodule

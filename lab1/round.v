@@ -34,7 +34,7 @@ module round(
 					final_exponent <= exponent;
 				end
 				else begin
-					final_significand = (significand >> 1);
+					final_significand = (significand >> 1) + 1;
 					final_exponent <= exponent + 1;
 				end
 			end
