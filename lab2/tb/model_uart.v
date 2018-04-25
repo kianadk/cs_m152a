@@ -20,10 +20,12 @@ module model_uart(/*AUTOARG*/
    event     evTxBit;
    event     evTxByte;
    reg       TX;
+	reg[31:0] totalData;
 
    initial
      begin
         TX = 1'b1;
+		  totalData = 0;
      end
    
    always @ (negedge RX)
@@ -37,7 +39,19 @@ module model_uart(/*AUTOARG*/
              rxData[7:0] = {RX,rxData[7:1]};
           end
         ->evByte;
-        $display ("%d %s Received byte %02x (%s)", $stime, name, rxData, rxData);
+		  if (rxData == "\r") begin
+			//$display("received newline");
+			$display("%s", totalData);
+		  end
+		  else if (rxData == "\n") begin
+		   //$display("received n newline");
+		  end
+		  else begin
+		   totalData = totalData << 8;
+			totalData = totalData ^ rxData;
+			//$display("received byte %s", rxData);
+		  end
+        // $display ("%d %s Received byte %02x (%s)", $stime, name, rxData, rxData);
      end
 
    task tskRxData;
