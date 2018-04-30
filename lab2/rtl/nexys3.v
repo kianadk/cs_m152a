@@ -41,6 +41,7 @@ module nexys3 (/*AUTOARG*/
       
    reg [7:0]   inst_wd;
    reg         inst_vld;
+	reg			inst_vld_send;
    reg [2:0]   step_d;
 	reg [2:0]   step_d_send;
 
@@ -105,15 +106,17 @@ module nexys3 (/*AUTOARG*/
    always @ (posedge clk)
      if (rst)
        inst_vld <= 1'b0;
-     else if (clk_en_d)
-       inst_vld <= (is_btnS_posedge | is_btn1_posedge);
+     else if (clk_en_d) begin
+       inst_vld <= is_btnS_posedge;
+		 inst_vld_send <= is_btn1_posedge;
+	  end
 	  else
 	    inst_vld <= 0;
 
    always @ (posedge clk)
      if (rst)
        inst_cnt <= 0;
-     else if (inst_vld)
+     else if (inst_vld || inst_vld_send)
        inst_cnt <= inst_cnt + 1;
 
    assign led[7:0] = inst_cnt[7:0];
@@ -129,6 +132,7 @@ module nexys3 (/*AUTOARG*/
              .i_tx_busy                 (uart_tx_busy),
              .i_inst                    (inst_wd[seq_in_width-1:0]),
              .i_inst_valid              (inst_vld),
+				 .i_inst_valid_send         (inst_vld_send),
              /*AUTOINST*/
              // Inputs
              .clk                       (clk),
