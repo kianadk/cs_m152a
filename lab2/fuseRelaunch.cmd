@@ -1,1 +1,1 @@
--intstyle "ise" -incremental -lib "unisims_ver" -lib "unimacro_ver" -lib "xilinxcorelib_ver" -lib "secureip" -o "/home/ise/m152a_shared_folder/lab2/tb_isim_beh.exe" -prj "/home/ise/m152a_shared_folder/lab2/tb_beh.prj" "work.tb" "work.glbl" 
+-intstyle "ise" -incremental -lib "unisims_ver" -lib "unimacro_ver" -lib "xilinxcorelib_ver" -lib "secureip" -o "C:/Users/152/Downloads/cs_m152a-master/lab2/tb_isim_beh.exe" -prj "C:/Users/152/Downloads/cs_m152a-master/lab2/tb_beh.prj" "work.tb" "work.glbl" 

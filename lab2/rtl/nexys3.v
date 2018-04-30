@@ -110,7 +110,7 @@ module nexys3 (/*AUTOARG*/
 	  end
      else if (clk_en_d) begin
        inst_vld <= is_btnS_posedge;
-		 inst_vld_send <= is_btn1_posedge;
+		 inst_vld_send <= is_btnS_posedge || is_btn1_posedge;
 	  end
 	  else begin
 	    inst_vld <= 0;
@@ -155,6 +155,7 @@ module nexys3 (/*AUTOARG*/
                        .i_rx            (RsRx),
                        .i_tx_data       (seq_tx_data[seq_dp_width-1:0]),
                        .i_tx_stb        (seq_tx_valid),
+							  .i_reg_num       (inst_wd[seq_in_width-3:seq_in_width-4]),
                        /*AUTOINST*/
                        // Inputs
                        .clk             (clk),

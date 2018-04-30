@@ -5,5 +5,8 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
+<msg type="warning" file="HDLCompiler" num="1016" delta="unknown" >"C:/Users/152/Downloads/cs_m152a-master/lab2/tb/tb.v" Line 56: Port <arg fmt="%s" index="1">btn1</arg> is not connected to this instance
+</msg>
+
 </messages>
 
