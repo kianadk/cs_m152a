@@ -104,14 +104,18 @@ module nexys3 (/*AUTOARG*/
    assign is_btnS_posedge = ~ step_d[0] & step_d[1];
 	assign is_btn1_posedge = ~ step_d_send[0] & step_d_send[1];
    always @ (posedge clk)
-     if (rst)
+     if (rst) begin
        inst_vld <= 1'b0;
+		 inst_vld_send <= 1'b0;
+	  end
      else if (clk_en_d) begin
        inst_vld <= is_btnS_posedge;
 		 inst_vld_send <= is_btn1_posedge;
 	  end
-	  else
+	  else begin
 	    inst_vld <= 0;
+		 inst_vld_send <= 0;
+	  end
 
    always @ (posedge clk)
      if (rst)
