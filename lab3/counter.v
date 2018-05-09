@@ -19,6 +19,7 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 module counter(
+	input adj,
 	input pause,
 	input rst,
 	input clock,
@@ -34,7 +35,7 @@ always @ (posedge clock or posedge rst) begin
 		min_unit <= 0;
 		min_ten <= 0;
 	end
-	else if (!pause) begin
+	else if (!pause && !adj) begin
 		if (sec_unit == 9) begin
 			if (sec_ten == 5) begin
 				if (min_unit == 9) begin

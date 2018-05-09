@@ -19,6 +19,10 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 module display(
+    input sel1,
+	 input sel2,
+	 input adj,
+    input blink_clock,
     input fast_clock,
     input [3:0] min_ten,
     input [3:0] min_unit,
@@ -28,18 +32,48 @@ module display(
 	 output reg [3:0] an
 );
 
+reg [1:0] state;
+
+initial begin
+	state <= 0;
+end
+
 always @ (posedge fast_clock) begin
-	case (an)
-		4'b0111:
-			an <= 4'b1011;
-		4'b1011:
-			an <= 4'b1101;
-		4'b1101:
-			an <= 4'b1110;
-		4'b1110:
-			an <= 4'b0111;
+	case (state)
+		2'b00:
+		begin
+			state = state + 1;
+			if (blink_clock && adj && !sel1 && !sel2)
+				an <= 4'b1111;
+			else
+				an <= 4'b1011;
+		end
+		2'b01:
+		begin
+			state = state + 1;
+			if (blink_clock && adj && sel1 && sel2)
+				an <= 4'b1111;
+			else
+				an <= 4'b1101;
+		end
+		2'b10:
+		begin
+			state = state + 1;
+			if (blink_clock && adj && sel1 && !sel2)
+				an <= 4'b1111;
+			else
+				an <= 4'b1110;
+		end
+		2'b11:
+		begin
+			state = 0;
+			if (blink_clock && adj && !sel1 && sel2)
+				an <= 4'b1111;
+			else
+				an <= 4'b0111;
+		end
 		default:
-			an <= 4'b0111;
+				an <= 4'b0111;
 	endcase
 end
 

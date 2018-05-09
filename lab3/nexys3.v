@@ -1,8 +1,15 @@
 `timescale 1ns / 1ps
 module nexys3(
+	input sel1,
+	input sel2,
+	input num1,
+	input num2,
+	input num3,
+	input num4,
 	input clk,
 	input btnR,
 	input btnL,
+	input adj_sw,
 	output [7:0] seg,
 	output [3:0] an
 );
@@ -57,6 +64,7 @@ end
 //////////////////////////////////////////////////
 
 counter counter_(
+	.adj(adj_sw),
 	.pause(pause),
 	.rst(rst),
 	.clock(unit_clock),
@@ -72,6 +80,10 @@ clock clock_(
     .blink_clock(blink_clock));
 	 
 display display_(
+	 .sel1(sel1),
+	 .sel2(sel2),
+	 .adj(adj_sw),
+	 .blink_clock(blink_clock),
 	 .fast_clock(fast_clock),
     .min_ten(min_ten),
     .min_unit(min_unit),
@@ -79,5 +91,8 @@ display display_(
     .sec_unit(sec_unit),
 	 .seg(seg),
 	 .an(an));
+	 
+adjust adjust_(
+);
 	 
 endmodule

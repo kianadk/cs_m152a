@@ -42,7 +42,7 @@ always @ (posedge internal_clk) begin
 end
 
 always @ (posedge internal_clk) begin
-	if (blink_count == 49999999) begin
+	if (blink_count == 25000000) begin
 		blink_count <= 0;
 		blink_clock = !blink_clock;
 	end
