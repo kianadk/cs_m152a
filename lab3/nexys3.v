@@ -1,6 +1,7 @@
 `timescale 1ns / 1ps
 module nexys3(
 	input clk,
+	input btnR,
 	output [7:0] seg,
 	output [3:0] an
 );
@@ -12,9 +13,27 @@ wire [3:0] min_ten;
 wire [3:0] min_unit;
 wire [2:0] sec_ten;
 wire [3:0] sec_unit;
-	
+
+
+//////Reset/////////////////////////////////////
+wire arst_i;
+wire rst;
+reg [1:0] arst_ff;
+reg reset;
+
+assign arst_i = btnR;
+assign rst = arst_ff[0];
+
+always @ (posedge clk or posedge arst_i) begin
+	if (arst_i)
+		arst_ff <= 2'b11;
+	else
+		arst_ff <= {1'b0, arst_ff[1]};
+end
+//////////////////////////////////////////////////
 
 counter counter_(
+	.rst(rst),
 	.clock(unit_clock),
 	.min_ten(min_ten),
 	.min_unit(min_unit),
