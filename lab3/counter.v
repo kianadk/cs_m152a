@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 module counter(
 	input clock,
-	output reg [2:0] min_ten,	//TODO: can only count up to an hour rn
+	output reg [3:0] min_ten,
 	output reg [3:0] min_unit,
 	output reg [2:0] sec_ten,
 	output reg [3:0] sec_unit);
