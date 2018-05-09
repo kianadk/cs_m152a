@@ -22,7 +22,7 @@ initial begin
 end
 
 always @ (posedge internal_clk) begin
-	if (unit_count == 99999999) begin
+	if (unit_count == 50000000) begin
 		unit_count <= 0;
 		unit_clock = !unit_clock;
 	end
@@ -32,7 +32,7 @@ always @ (posedge internal_clk) begin
 end
 
 always @ (posedge internal_clk) begin
-	if (fast_count == 999999) begin
+	if (fast_count == 300000) begin
 		fast_count <= 0;
 		fast_clock = !fast_clock;
 	end

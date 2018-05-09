@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
-  <DateModified>2018-05-09T12:05:33</DateModified>
+  <DateModified>2018-05-09T13:22:15</DateModified>
   <ModuleName>nexys3</ModuleName>
-  <SummaryTimeStamp>2018-05-09T12:03:00</SummaryTimeStamp>
+  <SummaryTimeStamp>2018-05-09T13:12:19</SummaryTimeStamp>
   <SavedFilePath>C:/Users/152/Downloads/cs_m152a-master/lab3/iseconfig/nexys3.xreport</SavedFilePath>
-  <ImplementationReportsDirectory>C:/Users/152/Downloads/cs_m152a-master/lab3</ImplementationReportsDirectory>
+  <ImplementationReportsDirectory>C:/Users/152/Downloads/cs_m152a-master/lab3\</ImplementationReportsDirectory>
   <DateInitialized>2018-05-09T11:19:19</DateInitialized>
   <EnableMessageFiltering>false</EnableMessageFiltering>
  </header>
