@@ -19,6 +19,13 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 module counter(
+	input num1,
+	input num2,
+	input num3,
+	input num4,
+	input sel1,
+	input sel2,
+   input select,
 	input adj,
 	input pause,
 	input rst,
@@ -29,7 +36,21 @@ module counter(
 	output reg [3:0] sec_unit);
 	
 always @ (posedge clock or posedge rst) begin
-	if (rst) begin
+	if (adj && select) begin
+		if (!sel1 && !sel2)
+			sec_unit <= {num1, num2, num3, num4};
+		if (!sel1 && sel2) begin
+			if (num1)
+				sec_ten <= 6; // create error
+			else
+				sec_ten <= {num2, num3, num4};
+		end
+		if (sel1 && !sel2)
+			min_unit <= {num1, num2, num3, num4};
+		if (sel1 && sel2)
+			min_ten <= {num1, num2, num3, num4};
+	end
+	else if (rst) begin
 		sec_unit <= 0;
 		sec_ten <= 0;
 		min_unit <= 0;

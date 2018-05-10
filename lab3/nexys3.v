@@ -43,7 +43,8 @@ always @ (posedge clk or posedge apse_i) begin
 end
 
 always @ (posedge pse) begin
-	pause <= !pause;
+	if (!adj_sw)
+		pause <= !pause;
 end
 //////////////////////////////////////////////////
 
@@ -64,6 +65,13 @@ end
 //////////////////////////////////////////////////
 
 counter counter_(
+   .sel1(sel1),
+	.sel2(sel2),
+	.num1(num1),
+	.num2(num2),
+	.num3(num3),
+	.num4(num4),
+   .select(pse),
 	.adj(adj_sw),
 	.pause(pause),
 	.rst(rst),

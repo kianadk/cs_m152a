@@ -43,7 +43,7 @@ always @ (posedge fast_clock) begin
 		2'b00:
 		begin
 			state = state + 1;
-			if (blink_clock && adj && !sel1 && !sel2)
+			if (blink_clock && adj && sel1 && !sel2)
 				an <= 4'b1111;
 			else
 				an <= 4'b1011;
@@ -51,7 +51,7 @@ always @ (posedge fast_clock) begin
 		2'b01:
 		begin
 			state = state + 1;
-			if (blink_clock && adj && sel1 && sel2)
+			if (blink_clock && adj && !sel1 && sel2)
 				an <= 4'b1111;
 			else
 				an <= 4'b1101;
@@ -59,7 +59,7 @@ always @ (posedge fast_clock) begin
 		2'b10:
 		begin
 			state = state + 1;
-			if (blink_clock && adj && sel1 && !sel2)
+			if (blink_clock && adj && !sel1 && !sel2)
 				an <= 4'b1111;
 			else
 				an <= 4'b1110;
@@ -67,7 +67,7 @@ always @ (posedge fast_clock) begin
 		2'b11:
 		begin
 			state = 0;
-			if (blink_clock && adj && !sel1 && sel2)
+			if (blink_clock && adj && sel1 && sel2)
 				an <= 4'b1111;
 			else
 				an <= 4'b0111;
