@@ -25,7 +25,7 @@
 module clock_tb;
 
 	// Inputs
-	reg clk;
+	reg internal_clk;
 
 	// Outputs
 	wire unit_clock;
@@ -34,7 +34,7 @@ module clock_tb;
 
 	// Instantiate the Unit Under Test (UUT)
 	clock uut (
-		.clk(clk), 
+		.internal_clk(internal_clk), 
 		.unit_clock(unit_clock), 
 		.fast_clock(fast_clock), 
 		.blink_clock(blink_clock)
@@ -42,7 +42,7 @@ module clock_tb;
 
 	initial begin
 		// Initialize Inputs
-		clk = 0;
+		internal_clk = 0;
 
 		// Wait 100 ns for global reset to finish
 		#100;
@@ -52,6 +52,6 @@ module clock_tb;
 	end
       
 	always
-		#1 clk = !clk;
+		#1 internal_clk = !internal_clk;
 endmodule
 
