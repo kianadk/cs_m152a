@@ -28,7 +28,7 @@ module NERP_demo_top(
 	);
 
 // VGA display clock interconnect
-wire dclk;
+wire pclk;
 
 // disable the 7-segment decimal points
 assign dp = 1;
