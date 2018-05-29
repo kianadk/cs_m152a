@@ -19,6 +19,7 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 module down_arrow(
+    input [2:0] decode,
 	input [9:0] hc,
 	input [9:0] vc,
 	input [9:0] fc,
@@ -59,9 +60,16 @@ always @ (hc, vc) begin
 	
 		if (vc <= bottom + (height / 2)) begin
 			if (hc >= d_left + width / 3 && hc < d_right - width / 3) begin
-				red = 3'b111;
-				green = 3'b111;
-				blue = 2'b11;
+                if (decode == 3'b011) begin
+                    red = 3'b111;
+                    green = 3'b000;
+                    blue = 2'b11;
+                end
+                else begin
+                    red = 3'b111;
+                    green = 3'b111;
+                    blue = 2'b11;
+                end
 			end
 			else begin
 				red = 3'b000;
@@ -71,9 +79,16 @@ always @ (hc, vc) begin
 		end
 
 	   else if (hc >= d_left + offset && hc < d_right - offset) begin
-			red = 3'b111;
-			green = 3'b111;
-			blue = 2'b11;
+            if (decode == 3'b011) begin
+                red = 3'b111;
+                green = 3'b000;
+                blue = 2'b11;
+            end
+            else begin
+                red = 3'b111;
+                green = 3'b111;
+                blue = 2'b11;
+            end
 		end
 		
 		else begin
@@ -88,9 +103,16 @@ always @ (hc, vc) begin
 	
 		if (vc >= bottom + (height / 2)) begin
 			if (hc >= u_left + width / 3 && hc < u_right - width / 3) begin
-				red = 3'b111;
-				green = 3'b111;
-				blue = 2'b11;
+                if (decode == 3'b010) begin
+                    red = 3'b000;
+                    green = 3'b111;
+                    blue = 2'b00;
+                end
+                else begin
+                    red = 3'b111;
+                    green = 3'b111;
+                    blue = 2'b11;
+                end
 			end
 			else begin
 				red = 3'b000;
@@ -100,9 +122,16 @@ always @ (hc, vc) begin
 		end
 
 	   else if (hc >= u_left - offset && hc < u_right + offset) begin
-			red = 3'b111;
-			green = 3'b111;
-			blue = 2'b11;
+            if (decode == 3'b010) begin
+                red = 3'b000;
+                green = 3'b111;
+                blue = 2'b00;
+            end
+            else begin
+                red = 3'b111;
+                green = 3'b111;
+                blue = 2'b11;
+            end
 		end
 		
 		else begin
@@ -118,9 +147,16 @@ always @ (hc, vc) begin
 		// draw arrow stick
 		if (hc >= l_left + (width / 2)) begin
 			if (vc >= bottom + height / 3 && vc < top - height / 3) begin
-				red = 3'b111;
-				green = 3'b111;
-				blue = 2'b11;
+                if (decode == 3'b000) begin
+                    red = 3'b000;
+                    green = 3'b000;
+                    blue = 2'b11;
+                end
+                else begin
+                    red = 3'b111;
+                    green = 3'b111;
+                    blue = 2'b11;
+                end
 			end
 			else begin
 				red = 3'b000;
@@ -131,9 +167,16 @@ always @ (hc, vc) begin
 
 		// draw arrow point
 	   else if (vc >= bottom - h_offset && vc < top + h_offset) begin
-			red = 3'b111;
-			green = 3'b111;
-			blue = 2'b11;
+            if (decode == 3'b000) begin
+                red = 3'b000;
+                green = 3'b000;
+                blue = 2'b11;
+            end
+            else begin
+                red = 3'b111;
+                green = 3'b111;
+                blue = 2'b11;
+            end
 		end
 		
 		else begin
@@ -149,9 +192,16 @@ always @ (hc, vc) begin
 		// draw arrow stick
 		if (hc <= r_left + (width / 2)) begin
 			if (vc >= bottom + height / 3 && vc < top - height / 3) begin
-				red = 3'b111;
-				green = 3'b111;
-				blue = 2'b11;
+                if (decode == 3'b001) begin
+                    red = 3'b111;
+                    green = 3'b000;
+                    blue = 2'b00;
+                end
+                else begin
+                    red = 3'b111;
+                    green = 3'b111;
+                    blue = 2'b11;
+                end
 			end
 			else begin
 				red = 3'b000;
@@ -162,9 +212,16 @@ always @ (hc, vc) begin
 
 		// draw arrow point
 	   else if (vc >= bottom + r_offset && vc < top - r_offset) begin
-			red = 3'b111;
-			green = 3'b111;
-			blue = 2'b11;
+            if (decode == 3'b001) begin
+                red = 3'b111;
+                green = 3'b000;
+                blue = 2'b00;
+            end
+            else begin
+                red = 3'b111;
+                green = 3'b111;
+                blue = 2'b11;
+            end
 		end
 		
 		else begin

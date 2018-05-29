@@ -20,6 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 module vga640x480(
 	input wire pclk,			//pixel clock: 25MHz
+    input wire [2:0] decode,
 	output wire hsync,		//horizontal sync out
 	output wire vsync,		//vertical sync out
 	output wire [2:0] red,	//red vga output
@@ -79,45 +80,8 @@ end
 assign hsync = (hc < hpulse) ? 0:1;
 assign vsync = (vc < vpulse) ? 0:1;
 
-//always @(*) begin
-//	// first check if we're within active video range
-//	if (vc >= vbp && vc < vfp && hc >= hbp && hc < hfp) begin
-////		// display white arrow
-////		if (hc >= (hbp+240) && hc < (hbp+320) && vc >= (vbp+fc) && vc < (vbp+80+fc))
-////		begin
-////			
-////			if (hc >= (hbp + 240 + ((80 - (2 * ((vbp+80+fc) - vc))) / 2)) && hc < (hbp + 320 - ((80 - (2 * ((vbp+80+fc) - vc))) / 2))) begin
-////				red = 3'b111;
-////				green = 3'b111;
-////				blue = 2'b11;
-////			end
-////			
-////			else begin
-////				red = 3'b000;
-////				green = 3'b000;
-////				blue = 2'b00;
-////			end
-////
-////		end
-//
-//		// display black
-////		else
-////		begin
-//			red = 3'b000;
-//			green = 3'b000;
-//			blue = 2'b00;
-////		end
-//	end
-//	// we're outside active range so display black
-//	else
-//	begin
-//		red = 0;
-//		green = 0;
-//		blue = 0;
-//	end
-//end
-
 down_arrow _down_arrow(
+    .decode(decode),
 	.hc(hc),
 	.vc(vc),
 	.fc(fc),

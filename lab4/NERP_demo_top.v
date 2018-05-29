@@ -24,8 +24,11 @@ module NERP_demo_top(
 	output wire [2:0] green,//green vga output - 3 bits
 	output wire [1:0] blue,	//blue vga output - 2 bits
 	output wire hsync,		//horizontal sync out
-	output wire vsync			//vertical sync out
+	output wire vsync,			//vertical sync out
+    inout wire [7:0] JA
 	);
+    
+wire [2:0] Decode;
 
 // VGA display clock interconnect
 wire pclk;
@@ -46,7 +49,15 @@ vga640x480 U3(
 	.vsync(vsync),
 	.red(red),
 	.green(green),
-	.blue(blue)
-	);
+	.blue(blue),
+    .decode(Decode)
+);
+    
+Decoder C0(
+    .clk(clk),
+    .Row(JA[7:4]),
+	.Col(JA[3:0]),
+	.DecodeOut(Decode)
+);
 
 endmodule
