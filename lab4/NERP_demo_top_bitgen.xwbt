@@ -1,8 +1,8 @@
 INTSTYLE=ise
-INFILE=C:\Users\152\Downloads\cs_m152a-master\cs_m152a-master\lab4\NERP_demo_top.ncd
-OUTFILE=C:\Users\152\Downloads\cs_m152a-master\cs_m152a-master\lab4\NERP_demo_top.bit
+INFILE=C:\Users\152\Downloads\lab4\NERP_demo_top.ncd
+OUTFILE=C:\Users\152\Downloads\lab4\NERP_demo_top.bit
 FAMILY=Spartan6
 PART=xc6slx16-3csg324
-WORKINGDIR=C:\Users\152\Downloads\cs_m152a-master\cs_m152a-master\lab4
+WORKINGDIR=C:\Users\152\Downloads\lab4
 LICENSE=ISE
-USER_INFO=203015155_203016297_210565169_900
+USER_INFO=203015155_203016297_210565169_560
