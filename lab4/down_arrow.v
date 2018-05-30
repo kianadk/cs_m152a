@@ -22,7 +22,9 @@ module down_arrow(
    input [2:0] decode,
 	input [9:0] hc,
 	input [9:0] vc,
-	input [9:0] fc,
+	input [9:0] d_top,
+	input [9:0] d_bottom,
+	input [9:0] d_vc,
 	input [9:0] top,
 	input [9:0] bottom,
 	input [9:0] u_left,
@@ -60,10 +62,14 @@ parameter r_right = r_left + arrowWidth;
 
 wire [9:0] width;
 assign width = d_right - d_left;
+
 wire [9:0] height;
 assign height = top - bottom;
+
 wire [9:0] offset;
 assign offset = vc - (bottom + height / 2);
+wire [9:0] d_offset;
+assign d_offset = vc - (d_bottom + height / 2);
 wire [9:0] h_offset;
 assign h_offset = hc - (l_left + width / 2);
 wire [9:0] r_offset;
@@ -91,9 +97,9 @@ always @ (hc, vc) begin
 		displayDigit(score);
    end
 	// down arrow
-	else if (hc >= d_left && hc < d_right && vc >= bottom && vc < top) begin
+	else if (hc >= d_left && hc < d_right && vc >= d_bottom && vc < d_top) begin
 	
-		if (vc <= bottom + (height / 2)) begin
+		if (vc <= d_bottom + (height / 2)) begin
 			if (hc >= d_left + width / 3 && hc < d_right - width / 3) begin
                 if (decode == 3'b011) begin
                     red = 3'b111;
@@ -111,7 +117,7 @@ always @ (hc, vc) begin
 			end
 		end
 
-	   else if (hc >= d_left + offset && hc < d_right - offset) begin
+	   else if (hc >= d_left + d_offset && hc < d_right - d_offset) begin
             if (decode == 3'b011) begin
                 red = 3'b111;
                 green = 3'b000;
