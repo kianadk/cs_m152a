@@ -20,17 +20,16 @@
 //////////////////////////////////////////////////////////////////////////////////
 module LFSR(
     input clk,
-    input [12:0] seed,
-    output [12:0] rand
+    output [29:0] rand
 );
 
-wire feedback = random[12] ^ random[3] ^ random[2] ^ random[0];
+wire feedback = random[29] ^ random[5] ^ random[3] ^ random[0];
 
-reg [12:0] random, random_next, random_done;
-reg [3:0] count, count_next;
+reg [29:0] random, random_next, random_done;
+reg [4:0] count, count_next;
 
 initial begin
-    random <= 13'hF;
+    random <= 30'hF;
     count <= 0;
 end
 
@@ -38,7 +37,7 @@ always @ (posedge clk) begin
     random <= random_next;
     count <= count_next;
     
-    if (count == 13) begin
+    if (count == 30) begin
         count <= 0;
         random_done <= random;
     end
@@ -48,7 +47,7 @@ always @ (*) begin
     random_next = random;
     count_next = count;
     
-    random_next = {random[11:0], feedback};
+    random_next = {random[28:0], feedback};
     count_next = count + 1;
 end
 

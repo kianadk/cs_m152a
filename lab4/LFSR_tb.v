@@ -29,19 +29,17 @@ module LFSR_tb;
     reg seed;
 
 	// Outputs
-	wire [12:0] rand;
+	wire [29:0] rand;
 
 	// Instantiate the Unit Under Test (UUT)
 	LFSR uut (
 		.clk(clk), 
 		.rand(rand),
-        .seed(seed)
 	);
 
 	initial begin
 		// Initialize Inputs
 		clk = 0;
-        seed = 13'hF;
 
 		// Wait 100 ns for global reset to finish
 		#100;

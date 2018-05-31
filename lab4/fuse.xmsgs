@@ -5,7 +5,10 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
-<msg type="warning" file="HDLCompiler" num="189" delta="unknown" >"C:/Users/152/Downloads/cs_m152a-master/lab4/LFSR_tb.v" Line 38: Size mismatch in connection of port &lt;<arg fmt="%s" index="3">seed</arg>&gt;. Formal port size is <arg fmt="%d" index="2">13</arg>-bit while actual signal size is <arg fmt="%d" index="1">1</arg>-bit.
+<msg type="error" file="HDLCompiler" num="718" delta="unknown" >"C:/Users/152/Downloads/cs_m152a-master/lab4/LFSR_tb.v" Line 35: Port connections cannot be mixed ordered and named
+</msg>
+
+<msg type="error" file="HDLCompiler" num="598" delta="unknown" >"C:/Users/152/Downloads/cs_m152a-master/lab4/LFSR_tb.v" Line 25: Module &lt;<arg fmt="%s" index="1">LFSR_tb</arg>&gt; ignored due to previous errors.
 </msg>
 
 </messages>

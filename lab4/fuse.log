@@ -1,0 +1,10 @@
+Running: C:\Xilinx\14.6\ISE_DS\ISE\bin\nt64\unwrapped\fuse.exe -intstyle ise -incremental -lib unisims_ver -lib unimacro_ver -lib xilinxcorelib_ver -lib secureip -o C:/Users/152/Downloads/cs_m152a-master/lab4/LFSR_tb_isim_beh.exe -prj C:/Users/152/Downloads/cs_m152a-master/lab4/LFSR_tb_beh.prj work.LFSR_tb work.glbl 
+ISim P.68d (signature 0x7708f090)
+Number of CPUs detected in this system: 2
+Turning on mult-threading, number of parallel sub-compilation jobs: 4 
+Determining compilation order of HDL files
+Analyzing Verilog file "C:/Users/152/Downloads/cs_m152a-master/lab4/LFSR.v" into library work
+Analyzing Verilog file "C:/Users/152/Downloads/cs_m152a-master/lab4/LFSR_tb.v" into library work
+ERROR:HDLCompiler:718 - "C:/Users/152/Downloads/cs_m152a-master/lab4/LFSR_tb.v" Line 35: Port connections cannot be mixed ordered and named
+ERROR:HDLCompiler:598 - "C:/Users/152/Downloads/cs_m152a-master/lab4/LFSR_tb.v" Line 25: Module <LFSR_tb> ignored due to previous errors.
+Verilog file C:/Users/152/Downloads/cs_m152a-master/lab4/LFSR_tb.v ignored due to errors
