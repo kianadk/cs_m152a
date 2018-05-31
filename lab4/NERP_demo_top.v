@@ -29,9 +29,14 @@ module NERP_demo_top(
 	);
     
 wire [2:0] Decode;
+wire [12:0] d_rand;
+wire [12:0] u_rand;
+wire [12:0] l_rand;
+wire [12:0] r_rand;
 
 // VGA display clock interconnect
 wire pclk;
+wire sclk;
 
 // disable the 7-segment decimal points
 assign dp = 1;
@@ -39,8 +44,9 @@ assign dp = 1;
 // generate 7-segment clock & display clock
 clockdiv U1(
 	.clk(clk),
-	.pclk(pclk)
-	);
+	.pclk(pclk),
+    .sclk(sclk)
+);
 
 // VGA controller
 vga640x480 U3(
@@ -50,7 +56,11 @@ vga640x480 U3(
 	.red(red),
 	.green(green),
 	.blue(blue),
-    .decode(Decode)
+    .decode(Decode),
+    .d_rand(d_rand),
+    .u_rand(u_rand),
+    .l_rand(l_rand),
+    .r_rand(r_rand)
 );
     
 Decoder C0(
@@ -58,6 +68,26 @@ Decoder C0(
     .Row(JA[7:4]),
 	.Col(JA[3:0]),
 	.DecodeOut(Decode)
+);
+
+LFSR d_LFSR(
+    .clk(sclk),
+    .rand(d_rand)
+);
+
+LFSR2 u_LFSR(
+    .clk(sclk),
+    .rand(u_rand)
+);
+
+LFSR3 l_LFSR(
+    .clk(sclk),
+    .rand(l_rand)
+);
+
+LFSR4 r_LFSR(
+    .clk(sclk),
+    .rand(r_rand)
 );
 
 endmodule

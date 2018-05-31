@@ -27,6 +27,7 @@ module vga_tb;
 	// Inputs
 	reg pclk;
 	reg [2:0] decode;
+    reg [12:0] d_rand;
 
 	// Outputs
 	wire hsync;
@@ -43,13 +44,15 @@ module vga_tb;
 		.vsync(vsync), 
 		.red(red), 
 		.green(green), 
-		.blue(blue)
+		.blue(blue),
+        .d_rand(d_rand)
 	);
 
 	initial begin
 		// Initialize Inputs
 		pclk = 0;
 		decode = 0;
+        d_rand = 0;
 
 		// Wait 100 ns for global reset to finish
 		#100;
@@ -60,6 +63,7 @@ module vga_tb;
 	
 	always begin
 	#1 pclk = !pclk;
+    d_rand = $random % 13;
    end
 		
 endmodule

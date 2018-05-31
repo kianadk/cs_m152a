@@ -19,10 +19,10 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 module clockdiv(
-	input wire clk,		//master clock: 50MHz
-	input wire clr,		//asynchronous reset
-	output wire pclk		//pixel clock: 25MHz
-	);
+	input wire clk,		//master clock: 100MHz
+	output wire pclk,		//pixel clock: 25MHz
+    output wire sclk
+);
 
 // 17-bit counter variable
 reg [16:0] counter;
@@ -37,5 +37,6 @@ end
 
 // 100Mhz ÷ 2^2 = 25MHz
 assign pclk = counter[1];
+assign sclk = counter[10];
 
 endmodule

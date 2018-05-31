@@ -24,11 +24,21 @@ module down_arrow(
 	input [9:0] vc,
 	input [9:0] d_top,
 	input [9:0] d_bottom,
+	input [9:0] u_top,
+	input [9:0] u_bottom, 
+	input [9:0] l_top,
+	input [9:0] l_bottom,
+	input [9:0] r_top,
+	input [9:0] r_bottom,     
 	input [9:0] d_vc,
 	input [9:0] top,
 	input [9:0] bottom,
 	input [9:0] u_left,
 	input [9:0] u_right,
+    input d_visible,
+    input u_visible,
+    input l_visible,
+    input r_visible,
 	output reg [2:0] red,
 	output reg [2:0] green,
 	output reg [1:0] blue
@@ -70,6 +80,8 @@ wire [9:0] offset;
 assign offset = vc - (bottom + height / 2);
 wire [9:0] d_offset;
 assign d_offset = vc - (d_bottom + height / 2);
+wire [9:0] u_offset;
+assign u_offset = vc - (u_bottom + height / 2);
 wire [9:0] h_offset;
 assign h_offset = hc - (l_left + width / 2);
 wire [9:0] r_offset;
@@ -98,8 +110,10 @@ always @ (hc, vc) begin
    end
 	// down arrow
 	else if (hc >= d_left && hc < d_right && vc >= d_bottom && vc < d_top) begin
-	
-		if (vc <= d_bottom + (height / 2)) begin
+        if (!d_visible) begin
+            makeBlack();
+        end
+		else if (vc <= d_bottom + (height / 2)) begin
 			if (hc >= d_left + width / 3 && hc < d_right - width / 3) begin
                 if (decode == 3'b011) begin
                     red = 3'b111;
@@ -111,13 +125,11 @@ always @ (hc, vc) begin
                 end
 			end
 			else begin
-				red = 3'b000;
-				green = 3'b000;
-				blue = 2'b00;
+				makeBlack();
 			end
 		end
 
-	   else if (hc >= d_left + d_offset && hc < d_right - d_offset) begin
+	    else if (hc >= d_left + d_offset && hc < d_right - d_offset) begin
             if (decode == 3'b011) begin
                 red = 3'b111;
                 green = 3'b000;
@@ -136,9 +148,11 @@ always @ (hc, vc) begin
 
 	end
 	// up arrow
-	else if (hc >= u_left && hc < u_right && vc >= bottom && vc < top) begin
-	
-		if (vc >= bottom + (height / 2)) begin
+	else if (hc >= u_left && hc < u_right && vc >= u_bottom && vc < u_top) begin
+        if (!u_visible) begin
+            makeBlack();
+        end
+		else if (vc >= u_bottom + (height / 2)) begin
 			if (hc >= u_left + width / 3 && hc < u_right - width / 3) begin
                 if (decode == 3'b010) begin
                     red = 3'b000;
@@ -156,7 +170,7 @@ always @ (hc, vc) begin
 			end
 		end
 
-	   else if (hc >= u_left - offset && hc < u_right + offset) begin
+	   else if (hc >= u_left - u_offset && hc < u_right + u_offset) begin
             if (decode == 3'b010) begin
                 red = 3'b000;
                 green = 3'b111;
@@ -175,11 +189,13 @@ always @ (hc, vc) begin
 
 	end
 	// left arrow
-	else if (hc >= l_left && hc < l_right && vc >= bottom && vc < top) begin
-	
+	else if (hc >= l_left && hc < l_right && vc >= l_bottom && vc < l_top) begin
+        if (!l_visible) begin
+            makeBlack();
+        end
 		// draw arrow stick
-		if (hc >= l_left + (width / 2)) begin
-			if (vc >= bottom + height / 3 && vc < top - height / 3) begin
+		else if (hc >= l_left + (width / 2)) begin
+			if (vc >= l_bottom + height / 3 && vc < l_top - height / 3) begin
                 if (decode == 3'b000) begin
                     red = 3'b000;
                     green = 3'b000;
@@ -197,7 +213,7 @@ always @ (hc, vc) begin
 		end
 
 		// draw arrow point
-	   else if (vc >= bottom - h_offset && vc < top + h_offset) begin
+	   else if (vc >= l_bottom - h_offset && vc < l_top + h_offset) begin
             if (decode == 3'b000) begin
                 red = 3'b000;
                 green = 3'b000;
@@ -209,18 +225,18 @@ always @ (hc, vc) begin
 		end
 		
 		else begin
-			red = 3'b000;
-			green = 3'b000;
-			blue = 2'b00;
+			makeBlack();
 		end
 
 	end
 	// right arrow
-	else if (hc >= r_left && hc < r_right && vc >= bottom && vc < top) begin
-	
+	else if (hc >= r_left && hc < r_right && vc >= r_bottom && vc < r_top) begin
+        if (!r_visible) begin
+            makeBlack();
+        end
 		// draw arrow stick
-		if (hc <= r_left + (width / 2)) begin
-			if (vc >= bottom + height / 3 && vc < top - height / 3) begin
+		else if (hc <= r_left + (width / 2)) begin
+			if (vc >= r_bottom + height / 3 && vc < r_top - height / 3) begin
                 if (decode == 3'b001) begin
                     red = 3'b111;
                     green = 3'b000;
@@ -231,14 +247,12 @@ always @ (hc, vc) begin
                 end
 			end
 			else begin
-				red = 3'b000;
-				green = 3'b000;
-				blue = 2'b00;
+				makeBlack();
 			end
 		end
 
 		// draw arrow point
-	   else if (vc >= bottom + r_offset && vc < top - r_offset) begin
+	   else if (vc >= r_bottom + r_offset && vc < r_top - r_offset) begin
             if (decode == 3'b001) begin
                 red = 3'b111;
                 green = 3'b000;
@@ -250,16 +264,12 @@ always @ (hc, vc) begin
 		end
 		
 		else begin
-			red = 3'b000;
-			green = 3'b000;
-			blue = 2'b00;
+			makeBlack();
 		end
 
 	end
 	else begin
-			red = 3'b000;
-			green = 3'b000;
-			blue = 2'b00;
+			makeBlack();
 	end
 end
 
@@ -268,6 +278,14 @@ begin
 	red = 3'b111;
 	green = 3'b111;
 	blue = 2'b11;
+end
+endtask
+
+task makeBlack;
+begin
+	red = 3'b000;
+	green = 3'b000;
+	blue = 2'b00;
 end
 endtask
 
