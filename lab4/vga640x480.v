@@ -25,6 +25,7 @@ module vga640x480(
     input wire [12:0] u_rand,
     input wire [12:0] l_rand,
     input wire [12:0] r_rand,
+	 input bclk,
 	output wire hsync,		//horizontal sync out
 	output wire vsync,		//vertical sync out
 	output wire [2:0] red,	//red vga output
@@ -99,7 +100,7 @@ end
 always @ (posedge pclk) begin
 	if (d_visible == 1 && vc == d_vc && hc == d_hc) begin
 		if (d_fc < frames - 1)
-			d_fc <= d_fc + 1;
+			d_fc <= d_fc + 4;
 		else begin
 			d_visible <= 0;
 		end
@@ -173,6 +174,7 @@ assign hsync = (hc < hpulse) ? 0:1;
 assign vsync = (vc < vpulse) ? 0:1;
 
 down_arrow _down_arrow(
+	.bclk(bclk),
     .decode(decode),
 	.hc(hc),
 	.vc(vc),

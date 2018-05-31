@@ -21,11 +21,12 @@
 module clockdiv(
 	input wire clk,		//master clock: 100MHz
 	output wire pclk,		//pixel clock: 25MHz
-    output wire sclk
+    output wire sclk,
+	 output wire bclk
 );
 
 // 17-bit counter variable
-reg [16:0] counter;
+reg [31:0] counter;
 
 // Clock divider --
 // Each bit in q is a clock signal that is
@@ -38,5 +39,5 @@ end
 // 100Mhz ÷ 2^2 = 25MHz
 assign pclk = counter[1];
 assign sclk = counter[10];
-
+assign bclk = counter[24];
 endmodule

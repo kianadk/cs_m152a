@@ -5,11 +5,5 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
-<msg type="error" file="HDLCompiler" num="718" delta="unknown" >"C:/Users/152/Downloads/cs_m152a-master/lab4/LFSR_tb.v" Line 35: Port connections cannot be mixed ordered and named
-</msg>
-
-<msg type="error" file="HDLCompiler" num="598" delta="unknown" >"C:/Users/152/Downloads/cs_m152a-master/lab4/LFSR_tb.v" Line 25: Module &lt;<arg fmt="%s" index="1">LFSR_tb</arg>&gt; ignored due to previous errors.
-</msg>
-
 </messages>
 

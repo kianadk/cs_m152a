@@ -37,6 +37,7 @@ wire [12:0] r_rand;
 // VGA display clock interconnect
 wire pclk;
 wire sclk;
+wire bclk;
 
 // disable the 7-segment decimal points
 assign dp = 1;
@@ -45,7 +46,8 @@ assign dp = 1;
 clockdiv U1(
 	.clk(clk),
 	.pclk(pclk),
-    .sclk(sclk)
+    .sclk(sclk),
+	 .bclk(bclk)
 );
 
 // VGA controller
@@ -60,7 +62,8 @@ vga640x480 U3(
     .d_rand(d_rand),
     .u_rand(u_rand),
     .l_rand(l_rand),
-    .r_rand(r_rand)
+    .r_rand(r_rand),
+	 .bclk(bclk)
 );
     
 Decoder C0(

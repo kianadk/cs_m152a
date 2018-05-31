@@ -19,6 +19,7 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 module down_arrow(
+	input bclk,
    input [2:0] decode,
 	input [9:0] hc,
 	input [9:0] vc,
@@ -88,14 +89,34 @@ wire [9:0] r_offset;
 assign r_offset = hc - (r_left + width / 2);
 
 reg [2:0] score;
+reg bounce;
+reg [15:0] bounce_count;
+
+parameter bounce_max = 20;
 
 initial begin
 	score <= 0;
+	bounce <= 0;
 end
 
-always @ (decode) begin
-	if (decode == 3'b000 && bottom <= 290 && bottom >= 205)
+always @ (decode, bclk) begin
+	//left
+	if (decode == 3'b000 && !bounce) begin
 		score <= score + 1;
+		bounce <= 1;
+		$display("setting bounce");
+	end
+	
+	if (bclk) begin
+		if (bounce_count < bounce_max) begin
+			bounce_count <= bounce_count + 1;
+		end
+		else begin
+			bounce_count <= 0;
+			bounce <= 0;
+			$display("unsetting bounce");
+		end
+	end
 end
 
 always @ (hc, vc) begin
