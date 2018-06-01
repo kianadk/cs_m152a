@@ -332,7 +332,232 @@ endtask
 
 task drawStart;
 begin
-	if (hc > 200 && hc < 240) begin
+	//d(ance dance revolution)
+	if (hc > 200 && hc < 240 && vc > 100 && vc < 145) begin
+		  //middle horizontal
+        if (vc > 120 && vc < 125 && hc > 200 && hc < 230) begin
+            makeWhite();
+        end
+		  //right top vertical
+        else if (vc > 100 && vc < 125 && hc > 225 && hc < 230) begin
+            makeWhite();
+        end
+		  //bottom horizontal
+        else if (vc > 140 && vc < 145 && hc > 200 && hc < 230) begin
+            makeWhite();
+        end
+		  //left bottom vertical
+        else if (vc > 120 && vc < 145 && hc > 200 && hc < 205) begin          
+            makeWhite();
+        end
+		  //right bottom vertical
+        else if (vc > 120 && vc < 145 && hc > 225 && hc < 230) begin           
+				makeWhite();
+        end		  
+        else begin
+            makeBlack();
+        end	
+	end
+	//(d)a(nce dance revolution)
+	else if (hc > 240 && hc < 280 && vc > 100 && vc < 145) begin
+		  // top horizontal
+        if (vc > 100 && vc < 105 && hc > 240 && hc < 270) begin
+            makeWhite();
+        end
+		  //middle horizontal
+        else if (vc > 120 && vc < 125 && hc > 240 && hc < 270) begin
+            makeWhite();
+        end
+		  //left top vertical
+        else if (vc > 100 && vc < 125 && hc > 240 && hc < 245) begin
+            makeWhite();
+        end
+		  //right top vertical
+        else if (vc > 100 && vc < 125 && hc > 265 && hc < 270) begin
+            makeWhite();
+        end
+		  //left bottom vertical
+        else if (vc > 120 && vc < 145 && hc > 240 && hc < 245) begin          
+            makeWhite();
+        end
+		  //right bottom vertical
+        else if (vc > 120 && vc < 145 && hc > 265 && hc < 270) begin           
+				makeWhite();
+        end		  
+        else begin
+            makeBlack();
+        end	
+	end
+	// n(ce dance revolution)
+	else if (hc > 280 && hc < 320 && vc > 100 && vc < 145) begin
+		  //middle horizontal
+        if (vc > 120 && vc < 125 && hc > 280 && hc < 310) begin
+            makeWhite();
+        end
+		  //left bottom vertical
+        else if (vc > 120 && vc < 145 && hc > 280 && hc < 285) begin          
+            makeWhite();
+        end
+		  //right bottom vertical
+        else if (vc > 120 && vc < 145 && hc > 305 && hc < 310) begin           
+				makeWhite();
+        end		  
+        else begin
+            makeBlack();
+        end	
+	end
+	//c(e dance revolution)
+	else if (hc > 320 && hc < 360 && vc > 100 && vc < 145) begin
+		  // top horizontal
+        if (vc > 100 && vc < 105 && hc > 320 && hc < 350)
+            makeWhite();
+		  //left top vertical
+        else if (vc > 100 && vc < 125 && hc > 320 && hc < 325)
+            makeWhite();
+		  //bottom horizontal
+        else if (vc > 140 && vc < 145 && hc > 320 && hc < 350) 
+            makeWhite();
+		  //left bottom vertical
+        else if (vc > 120 && vc < 145 && hc > 320 && hc < 325)          
+            makeWhite();	  
+        else begin
+            makeBlack();
+        end	
+	end
+	//e (dance revolution)
+	else if (hc > 360 && hc < 400 && vc > 100 && vc < 145) begin
+		  // top horizontal
+        if (vc > 100 && vc < 105 && hc > 320 && hc < 350)
+            makeWhite();
+		  //middle horizontal
+        else if (vc > 120 && vc < 125 && hc > 360 && hc < 390) 
+            makeWhite();
+		  //left top vertical
+        else if (vc > 100 && vc < 125 && hc > 360 && hc < 365)
+            makeWhite();
+		  //bottom horizontal
+        else if (vc > 140 && vc < 145 && hc > 360 && hc < 390) 
+            makeWhite();
+		  //left bottom vertical
+        else if (vc > 120 && vc < 145 && hc > 360 && hc < 365)          
+            makeWhite();	  
+        else 
+            makeBlack();	
+	end
+	//d(ance revolution)
+	else if (hc > 200 && hc < 240 && vc > 150 && vc < 195) begin
+		  //middle horizontal
+        if (vc > 170 && vc < 175 && hc > 200 && hc < 230) begin
+            makeWhite();
+        end
+		  //right top vertical
+        else if (vc > 150 && vc < 175 && hc > 225 && hc < 230) begin
+            makeWhite();
+        end
+		  //bottom horizontal
+        else if (vc > 190 && vc < 195 && hc > 200 && hc < 230) begin
+            makeWhite();
+        end
+		  //left bottom vertical
+        else if (vc > 170 && vc < 195 && hc > 200 && hc < 205) begin          
+            makeWhite();
+        end
+		  //right bottom vertical
+        else if (vc > 170 && vc < 195 && hc > 225 && hc < 230) begin           
+				makeWhite();
+        end		  
+        else begin
+            makeBlack();
+        end	
+	end
+	//a(nce revolution)
+	else if (hc > 240 && hc < 280 && vc > 150 && vc < 195) begin
+		  // top horizontal
+        if (vc > 150 && vc < 155 && hc > 240 && hc < 270) begin
+            makeWhite();
+        end
+		  //middle horizontal
+        else if (vc > 170 && vc < 175 && hc > 240 && hc < 270) begin
+            makeWhite();
+        end
+		  //left top vertical
+        else if (vc > 150 && vc < 175 && hc > 240 && hc < 245) begin
+            makeWhite();
+        end
+		  //right top vertical
+        else if (vc > 150 && vc < 175 && hc > 265 && hc < 270) begin
+            makeWhite();
+        end
+		  //left bottom vertical
+        else if (vc > 170 && vc < 195 && hc > 240 && hc < 245) begin          
+            makeWhite();
+        end
+		  //right bottom vertical
+        else if (vc > 170 && vc < 195 && hc > 265 && hc < 270) begin           
+				makeWhite();
+        end		  
+        else begin
+            makeBlack();
+        end	
+	end
+	// n(ce revolution)
+	else if (hc > 280 && hc < 320 && vc > 150 && vc < 195) begin
+		  //middle horizontal
+        if (vc > 170 && vc < 175 && hc > 280 && hc < 310) begin
+            makeWhite();
+        end
+		  //left bottom vertical
+        else if (vc > 170 && vc < 175 && hc > 280 && hc < 285) begin          
+            makeWhite();
+        end
+		  //right bottom vertical
+        else if (vc > 170 && vc < 195 && hc > 305 && hc < 310) begin           
+				makeWhite();
+        end		  
+        else begin
+            makeBlack();
+        end	
+	end
+	//c(e revolution)
+	else if (hc > 320 && hc < 360 && vc > 150 && vc < 195) begin
+		  // top horizontal
+        if (vc > 150 && vc < 155 && hc > 320 && hc < 350)
+            makeWhite();
+		  //left top vertical
+        else if (vc > 150 && vc < 175 && hc > 320 && hc < 325)
+            makeWhite();
+		  //bottom horizontal
+        else if (vc > 190 && vc < 195 && hc > 320 && hc < 350) 
+            makeWhite();
+		  //left bottom vertical
+        else if (vc > 170 && vc < 195 && hc > 320 && hc < 325)          
+            makeWhite();	  
+        else begin
+            makeBlack();
+        end	
+	end
+	//e (revolution)
+	else if (hc > 360 && hc < 400 && vc > 150 && vc < 195) begin
+		  // top horizontal
+        if (vc > 150 && vc < 155 && hc > 320 && hc < 350)
+            makeWhite();
+		  //middle horizontal
+        else if (vc > 170 && vc < 175 && hc > 360 && hc < 390) 
+            makeWhite();
+		  //left top vertical
+        else if (vc > 150 && vc < 175 && hc > 360 && hc < 365)
+            makeWhite();
+		  //bottom horizontal
+        else if (vc > 190 && vc < 195 && hc > 360 && hc < 390) 
+            makeWhite();
+		  //left bottom vertical
+        else if (vc > 170 && vc < 195 && hc > 360 && hc < 365)          
+            makeWhite();	  
+        else 
+            makeBlack();	
+	end
+	// currently just an 8 at the bottom left ish
+	else if (hc > 200 && hc < 240 && vc > 300 && vc < 345) begin
         // 0
 		  // top horizontal
         if (vc > 300 && vc < 305 && hc > 200 && hc < 230) begin
