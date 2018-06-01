@@ -33,6 +33,11 @@ wire [12:0] d_rand;
 wire [12:0] u_rand;
 wire [12:0] l_rand;
 wire [12:0] r_rand;
+wire l_arrow;
+wire r_arrow;
+wire u_arrow;
+wire d_arrow;
+wire enter;
 
 // VGA display clock interconnect
 wire pclk;
@@ -58,12 +63,52 @@ vga640x480 U3(
 	.red(red),
 	.green(green),
 	.blue(blue),
-    .decode(Decode),
-    .d_rand(d_rand),
-    .u_rand(u_rand),
-    .l_rand(l_rand),
-    .r_rand(r_rand),
-	 .bclk(bclk)
+   .decode(Decode),
+	.l_arrow(l_arrow),
+	.r_arrow(r_arrow),
+	.u_arrow(u_arrow),
+	.d_arrow(d_arrow),
+	.enter(enter),
+   .d_rand(d_rand),
+   .u_rand(u_rand),
+   .l_rand(l_rand),
+   .r_rand(r_rand),
+	.bclk(bclk)
+);
+
+debouncer e_debouncer(
+	.i_sig(Decode),
+	.goal_sig(3'b100),
+	.clk(bclk),
+	.sig(enter)
+);
+
+debouncer l_debouncer(
+	.i_sig(Decode),
+	.goal_sig(3'b000),
+	.clk(bclk),
+	.sig(l_arrow)
+);
+
+debouncer r_debouncer(
+	.i_sig(Decode),
+	.goal_sig(3'b001),
+	.clk(bclk),
+	.sig(r_arrow)
+);
+
+debouncer u_debouncer(
+	.i_sig(Decode),
+	.goal_sig(3'b010),
+	.clk(bclk),
+	.sig(u_arrow)
+);
+
+debouncer d_debouncer(
+	.i_sig(Decode),
+	.goal_sig(3'b011),
+	.clk(bclk),
+	.sig(d_arrow)
 );
     
 Decoder C0(

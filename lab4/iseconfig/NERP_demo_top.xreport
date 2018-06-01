@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
-  <DateModified>2018-05-31T18:26:27</DateModified>
+  <DateModified>2018-06-01T17:17:50</DateModified>
   <ModuleName>NERP_demo_top</ModuleName>
   <SummaryTimeStamp>2018-05-31T18:21:50</SummaryTimeStamp>
-  <SavedFilePath>C:/Users/152/Downloads/cs_m152a-master/lab4/iseconfig/NERP_demo_top.xreport</SavedFilePath>
-  <ImplementationReportsDirectory>C:/Users/152/Downloads/cs_m152a-master/lab4\</ImplementationReportsDirectory>
+  <SavedFilePath>/home/ise/m152a_shared_folder/lab4/iseconfig/NERP_demo_top.xreport</SavedFilePath>
+  <ImplementationReportsDirectory>/home/ise/m152a_shared_folder/lab4/</ImplementationReportsDirectory>
   <DateInitialized>2013-03-19T20:28:25</DateInitialized>
   <EnableMessageFiltering>false</EnableMessageFiltering>
  </header>

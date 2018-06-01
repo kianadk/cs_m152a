@@ -21,6 +21,11 @@
 module vga640x480(
 	input wire pclk,			//pixel clock: 25MHz
     input wire [2:0] decode,
+	 input wire l_arrow,
+	 input wire r_arrow,
+	 input wire u_arrow,
+	 input wire d_arrow,
+	 input enter,
     input wire [12:0] d_rand,
     input wire [12:0] u_rand,
     input wire [12:0] l_rand,
@@ -175,7 +180,12 @@ assign vsync = (vc < vpulse) ? 0:1;
 
 down_arrow _down_arrow(
 	.bclk(bclk),
-    .decode(decode),
+   .decode(decode),
+	.l_arrow(l_arrow),
+	.r_arrow(r_arrow),
+	.u_arrow(u_arrow),
+	.d_arrow(d_arrow),
+	.enter(enter),
 	.hc(hc),
 	.vc(vc),
 	.u_left(344),

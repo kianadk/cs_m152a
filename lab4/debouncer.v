@@ -19,16 +19,16 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 module debouncer(
-	input i_sig,
+	input [2:0] i_sig,
+	input [2:0] goal_sig,
 	input clk,
-	output reg sig
+	output sig
 );
 
 wire asig_i;
-wire sig;
 reg [1:0] asig_ff;
 
-assign asig_i = !i_sig;
+assign asig_i = (i_sig == goal_sig);
 assign sig = asig_ff[0];
 
 always @ (posedge clk or posedge asig_i) begin
@@ -36,10 +36,6 @@ always @ (posedge clk or posedge asig_i) begin
 		asig_ff <= 2'b11;
 	else
 		asig_ff <= {1'b0, asig_ff[1]};
-end
-
-always @ (posedge sig) begin
-	score <= score + 1;
 end
 
 endmodule

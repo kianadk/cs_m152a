@@ -19,6 +19,11 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 module down_arrow(
+	 input wire l_arrow,
+	 input wire r_arrow,
+	 input wire u_arrow,
+	 input wire d_arrow,
+	 input enter,
 	input bclk,
    input [2:0] decode,
 	input [9:0] hc,
@@ -88,202 +93,224 @@ assign h_offset = hc - (l_left + width / 2);
 wire [9:0] r_offset;
 assign r_offset = hc - (r_left + width / 2);
 
-reg [2:0] score;
+reg [3:0] l_score;
+reg [3:0] r_score;
+reg [3:0] u_score;
+reg [3:0] d_score;
+
+reg gameState;
+
+
+wire [3:0] score;
+assign score = l_score + r_score + u_score + d_score;
 
 initial begin
-	score <= 0;
+	l_score <= 0;
+	r_score <= 0;
+	u_score <= 0;
+	d_score <= 0;
+	gameState <= 0;
 end
 
-wire arst_i;
-wire rst;
-reg [1:0] arst_ff;
-
-assign arst_i = !decode;
-assign rst = arst_ff[0];
-
-always @ (posedge bclk or posedge arst_i) begin
-	if (arst_i)
-		arst_ff <= 2'b11;
-	else
-		arst_ff <= {1'b0, arst_ff[1]};
+always @ (posedge enter) begin
+	gameState <= ~gameState;
 end
 
-always @ (posedge rst) begin
-	score <= score + 1;
+always @ (posedge l_arrow) begin
+	l_score <= l_score + 1;
+end
+
+always @ (posedge r_arrow) begin
+	r_score <= r_score + 1;
+end
+
+always @ (posedge u_arrow) begin
+	u_score <= u_score + 1;
+end
+
+always @ (posedge d_arrow) begin
+	d_score <= d_score + 1;
 end
 
 always @ (hc, vc) begin
-    // arrow selection area
-	if ((vc <= 205 && vc > 200) || (vc <= 290 && vc > 285)) begin
-		red = 3'b111;
-		green = 3'b111;
-		blue = 2'b11;
+	//start screen
+	if (gameState == 0) begin
+		drawStart();
 	end
-   else if (vc <= 350 && vc > 300) begin
-		displayDigit(score);
-   end
-	// down arrow
-	else if (hc >= d_left && hc < d_right && vc >= d_bottom && vc < d_top) begin
-        if (!d_visible) begin
-            makeBlack();
-        end
-		else if (vc <= d_bottom + (height / 2)) begin
-			if (hc >= d_left + width / 3 && hc < d_right - width / 3) begin
-                if (decode == 3'b011) begin
-                    red = 3'b111;
-                    green = 3'b000;
-                    blue = 2'b11;
-                end
-                else begin
-                    makeWhite();
-                end
-			end
-			else begin
-				makeBlack();
-			end
-		end
-
-	    else if (hc >= d_left + d_offset && hc < d_right - d_offset) begin
-            if (decode == 3'b011) begin
-                red = 3'b111;
-                green = 3'b000;
-                blue = 2'b11;
-            end
-            else begin
-                makeWhite();
-            end
-		end
-		
-		else begin
-			red = 3'b000;
-			green = 3'b000;
-			blue = 2'b00;
-		end
-
-	end
-	// up arrow
-	else if (hc >= u_left && hc < u_right && vc >= u_bottom && vc < u_top) begin
-        if (!u_visible) begin
-            makeBlack();
-        end
-		else if (vc >= u_bottom + (height / 2)) begin
-			if (hc >= u_left + width / 3 && hc < u_right - width / 3) begin
-                if (decode == 3'b010) begin
-                    red = 3'b000;
-                    green = 3'b111;
-                    blue = 2'b00;
-                end
-                else begin
-                    makeWhite();
-                end
-			end
-			else begin
-				red = 3'b000;
-				green = 3'b000;
-				blue = 2'b00;
-			end
-		end
-
-	   else if (hc >= u_left - u_offset && hc < u_right + u_offset) begin
-            if (decode == 3'b010) begin
-                red = 3'b000;
-                green = 3'b111;
-                blue = 2'b00;
-            end
-            else begin
-                makeWhite();
-            end
-		end
-		
-		else begin
-			red = 3'b000;
-			green = 3'b000;
-			blue = 2'b00;
-		end
-
-	end
-	// left arrow
-	else if (hc >= l_left && hc < l_right && vc >= l_bottom && vc < l_top) begin
-        if (!l_visible) begin
-            makeBlack();
-        end
-		// draw arrow stick
-		else if (hc >= l_left + (width / 2)) begin
-			if (vc >= l_bottom + height / 3 && vc < l_top - height / 3) begin
-                if (decode == 3'b000) begin
-                    red = 3'b000;
-                    green = 3'b000;
-                    blue = 2'b11;
-                end
-                else begin
-                    makeWhite();
-                end
-			end
-			else begin
-				red = 3'b000;
-				green = 3'b000;
-				blue = 2'b00;
-			end
-		end
-
-		// draw arrow point
-	   else if (vc >= l_bottom - h_offset && vc < l_top + h_offset) begin
-            if (decode == 3'b000) begin
-                red = 3'b000;
-                green = 3'b000;
-                blue = 2'b11;
-            end
-            else begin
-                makeWhite();
-            end
-		end
-		
-		else begin
-			makeBlack();
-		end
-
-	end
-	// right arrow
-	else if (hc >= r_left && hc < r_right && vc >= r_bottom && vc < r_top) begin
-        if (!r_visible) begin
-            makeBlack();
-        end
-		// draw arrow stick
-		else if (hc <= r_left + (width / 2)) begin
-			if (vc >= r_bottom + height / 3 && vc < r_top - height / 3) begin
-                if (decode == 3'b001) begin
-                    red = 3'b111;
-                    green = 3'b000;
-                    blue = 2'b00;
-                end
-                else begin
-                    makeWhite();
-                end
-			end
-			else begin
-				makeBlack();
-			end
-		end
-
-		// draw arrow point
-	   else if (vc >= r_bottom + r_offset && vc < r_top - r_offset) begin
-            if (decode == 3'b001) begin
-                red = 3'b111;
-                green = 3'b000;
-                blue = 2'b00;
-            end
-            else begin
-                makeWhite();
-            end
-		end
-		
-		else begin
-			makeBlack();
-		end
-
-	end
+	//game mode
 	else begin
-			makeBlack();
+		 // arrow selection area
+		if ((vc <= 205 && vc > 200) || (vc <= 290 && vc > 285)) begin
+			red = 3'b111;
+			green = 3'b111;
+			blue = 2'b11;
+		end
+		else if (vc <= 350 && vc > 300) begin
+			displayScore(score);
+		end
+		// down arrow
+		else if (hc >= d_left && hc < d_right && vc >= d_bottom && vc < d_top) begin
+			  if (!d_visible) begin
+					makeBlack();
+			  end
+			else if (vc <= d_bottom + (height / 2)) begin
+				if (hc >= d_left + width / 3 && hc < d_right - width / 3) begin
+						 if (decode == 3'b011) begin
+							  red = 3'b111;
+							  green = 3'b000;
+							  blue = 2'b11;
+						 end
+						 else begin
+							  makeWhite();
+						 end
+				end
+				else begin
+					makeBlack();
+				end
+			end
+
+			 else if (hc >= d_left + d_offset && hc < d_right - d_offset) begin
+					if (decode == 3'b011) begin
+						 red = 3'b111;
+						 green = 3'b000;
+						 blue = 2'b11;
+					end
+					else begin
+						 makeWhite();
+					end
+			end
+			
+			else begin
+				red = 3'b000;
+				green = 3'b000;
+				blue = 2'b00;
+			end
+
+		end
+		// up arrow
+		else if (hc >= u_left && hc < u_right && vc >= u_bottom && vc < u_top) begin
+			  if (!u_visible) begin
+					makeBlack();
+			  end
+			else if (vc >= u_bottom + (height / 2)) begin
+				if (hc >= u_left + width / 3 && hc < u_right - width / 3) begin
+						 if (decode == 3'b010) begin
+							  red = 3'b000;
+							  green = 3'b111;
+							  blue = 2'b00;
+						 end
+						 else begin
+							  makeWhite();
+						 end
+				end
+				else begin
+					red = 3'b000;
+					green = 3'b000;
+					blue = 2'b00;
+				end
+			end
+
+			else if (hc >= u_left - u_offset && hc < u_right + u_offset) begin
+					if (decode == 3'b010) begin
+						 red = 3'b000;
+						 green = 3'b111;
+						 blue = 2'b00;
+					end
+					else begin
+						 makeWhite();
+					end
+			end
+			
+			else begin
+				red = 3'b000;
+				green = 3'b000;
+				blue = 2'b00;
+			end
+
+		end
+		// left arrow
+		else if (hc >= l_left && hc < l_right && vc >= l_bottom && vc < l_top) begin
+			  if (!l_visible) begin
+					makeBlack();
+			  end
+			// draw arrow stick
+			else if (hc >= l_left + (width / 2)) begin
+				if (vc >= l_bottom + height / 3 && vc < l_top - height / 3) begin
+						 if (decode == 3'b000) begin
+							  red = 3'b000;
+							  green = 3'b000;
+							  blue = 2'b11;
+						 end
+						 else begin
+							  makeWhite();
+						 end
+				end
+				else begin
+					red = 3'b000;
+					green = 3'b000;
+					blue = 2'b00;
+				end
+			end
+
+			// draw arrow point
+			else if (vc >= l_bottom - h_offset && vc < l_top + h_offset) begin
+					if (decode == 3'b000) begin
+						 red = 3'b000;
+						 green = 3'b000;
+						 blue = 2'b11;
+					end
+					else begin
+						 makeWhite();
+					end
+			end
+			
+			else begin
+				makeBlack();
+			end
+
+		end
+		// right arrow
+		else if (hc >= r_left && hc < r_right && vc >= r_bottom && vc < r_top) begin
+			  if (!r_visible) begin
+					makeBlack();
+			  end
+			// draw arrow stick
+			else if (hc <= r_left + (width / 2)) begin
+				if (vc >= r_bottom + height / 3 && vc < r_top - height / 3) begin
+						 if (decode == 3'b001) begin
+							  red = 3'b111;
+							  green = 3'b000;
+							  blue = 2'b00;
+						 end
+						 else begin
+							  makeWhite();
+						 end
+				end
+				else begin
+					makeBlack();
+				end
+			end
+
+			// draw arrow point
+			else if (vc >= r_bottom + r_offset && vc < r_top - r_offset) begin
+					if (decode == 3'b001) begin
+						 red = 3'b111;
+						 green = 3'b000;
+						 blue = 2'b00;
+					end
+					else begin
+						 makeWhite();
+					end
+			end
+			
+			else begin
+				makeBlack();
+			end
+
+		end
+		else begin
+				makeBlack();
+		end
 	end
 end
 
@@ -303,64 +330,288 @@ begin
 end
 endtask
 
-task displayDigit;
-input [3:0] number;
+task drawStart;
 begin
+	if (hc > 200 && hc < 240) begin
         // 0
 		  // top horizontal
-        if (vc > 300 && vc < 305 && hc > 200 && hc < 230 &&
+        if (vc > 300 && vc < 305 && hc > 200 && hc < 230) begin
+            makeWhite();
+        end
+		  //middle horizontal
+        else if (vc > 320 && vc < 325 && hc > 200 && hc < 230) begin
+            makeWhite();
+        end
+		  //left top vertical
+        else if (vc > 300 && vc < 325 && hc > 200 && hc < 205) begin
+            makeWhite();
+        end
+		  //right top vertical
+        else if (vc > 300 && vc < 325 && hc > 225 && hc < 230) begin
+            makeWhite();
+        end
+		  //bottom horizontal
+        else if (vc > 340 && vc < 345 && hc > 200 && hc < 230) begin
+            makeWhite();
+        end
+		  //left bottom vertical
+        else if (vc > 320 && vc < 345 && hc > 200 && hc < 205) begin          
+            makeWhite();
+        end
+		  //right bottom vertical
+        else if (vc > 320 && vc < 345 && hc > 225 && hc < 230) begin           
+				makeWhite();
+        end		  
+        else begin
+            makeBlack();
+        end	
+	end
+	else begin
+		makeBlack();
+	end
+end
+endtask
+
+task displayScore;
+input [9:0] score;
+begin
+	displayDigit(score / 10, score % 10, 280);
+	
+end
+endtask
+
+task displayDigit;
+input [3:0] ten;
+input [3:0] number;
+input [9:0] left_boundary;
+begin
+	//thousands
+	if (hc > 200 && hc < left_boundary + 40) begin
+        // 0
+		  // top horizontal
+        if (vc > 300 && vc < 305 && hc > left_boundary && hc < left_boundary + 30 &&
 				(number == 0 || number == 2 || number == 3 || number == 5 || number == 6 || number == 7 || number == 8 || number == 9)) begin
             red = 3'b111;
             green = 3'b111;
             blue = 2'b11;
         end
 		  //middle horizontal
-        else if (vc > 320 && vc < 325 && hc > 200 && hc < 230 &&
+        else if (vc > 320 && vc < 325 && hc > left_boundary && hc < left_boundary + 30 &&
 		  (number == 2 || number == 3 || number == 4 || number == 5 || number == 6 || number == 8 || number == 9)) begin
             red = 3'b111;
             green = 3'b111;
             blue = 2'b11;
         end
 		  //left top vertical
-        else if (vc > 300 && vc < 325 && hc > 200 && hc < 205 &&
+        else if (vc > 300 && vc < 325 && hc > left_boundary && hc < left_boundary + 5 &&
 		  (number == 0 || number == 1 || number == 4 || number == 5 || number == 6 || number == 8 || number == 9)) begin
             red = 3'b111;
             green = 3'b111;
             blue = 2'b11;
         end
 		  //right top vertical
-        else if (vc > 300 && vc < 325 && hc > 225 && hc < 230 &&
+        else if (vc > 300 && vc < 325 && hc > left_boundary + 25 && hc < left_boundary + 30 &&
 		  (number == 0 || number == 2 || number == 3 || number == 4 || number == 7 || number == 8 || number == 9)) begin
             red = 3'b111;
             green = 3'b111;
             blue = 2'b11;
         end
 		  //bottom horizontal
-        else if (vc > 340 && vc < 345 && hc > 200 && hc < 230 && 
+        else if (vc > 340 && vc < 345 && hc > left_boundary && hc < left_boundary + 30 && 
 		  (number == 0 || number == 2 || number == 3 || number == 5 || number == 6 || number == 8)) begin
             red = 3'b111;
             green = 3'b111;
             blue = 2'b11;
         end
 		  //left bottom vertical
-        else if (vc > 320 && vc < 345 && hc > 200 && hc < 205 &&
+        else if (vc > 320 && vc < 345 && hc > left_boundary && hc < left_boundary + 5 &&
 		  (number == 0 || number == 1 || number == 2 || number == 6 || number == 8)) begin
             red = 3'b111;
             green = 3'b111;
             blue = 2'b11;
         end
 		  //right bottom vertical
-        else if (vc > 320 && vc < 345 && hc > 225 && hc < 230 &&
+        else if (vc > 320 && vc < 345 && hc > left_boundary + 25 && hc < left_boundary + 30 &&
 		  (number == 0 || number == 3 || number == 4 || number == 5 || number == 6 || number == 7 || number == 8 || number == 9)) begin
             red = 3'b111;
             green = 3'b111;
             blue = 2'b11;
         end		  
         else begin
-            red = 3'b000;
-            green = 3'b000;
-            blue = 2'b00;
+            makeBlack();
         end	
+	end
+	//hundreds
+	else if (hc > left_boundary + 40 && hc < left_boundary + 80) begin
+        // 0
+		  // top horizontal
+        if (vc > 300 && vc < 305 && hc > left_boundary + 40 && hc < left_boundary + 30 + 40 &&
+				(number == 0 || number == 2 || number == 3 || number == 5 || number == 6 || number == 7 || number == 8 || number == 9)) begin
+            red = 3'b111;
+            green = 3'b111;
+            blue = 2'b11;
+        end
+		  //middle horizontal
+        else if (vc > 320 && vc < 325 && hc > left_boundary + 40 && hc < left_boundary + 30 + 40 &&
+		  (number == 2 || number == 3 || number == 4 || number == 5 || number == 6 || number == 8 || number == 9)) begin
+            red = 3'b111;
+            green = 3'b111;
+            blue = 2'b11;
+        end
+		  //left top vertical
+        else if (vc > 300 && vc < 325 && hc > left_boundary + 40 && hc < 40 + left_boundary + 5 &&
+		  (number == 0 || number == 1 || number == 4 || number == 5 || number == 6 || number == 8 || number == 9)) begin
+            red = 3'b111;
+            green = 3'b111;
+            blue = 2'b11;
+        end
+		  //right top vertical
+        else if (vc > 300 && vc < 325 && hc > left_boundary + 25 + 40 && hc < 40 + left_boundary + 30 &&
+		  (number == 0 || number == 2 || number == 3 || number == 4 || number == 7 || number == 8 || number == 9)) begin
+            red = 3'b111;
+            green = 3'b111;
+            blue = 2'b11;
+        end
+		  //bottom horizontal
+        else if (vc > 340 && vc < 345 && hc > 40 + left_boundary && hc < 40 + left_boundary + 30 && 
+		  (number == 0 || number == 2 || number == 3 || number == 5 || number == 6 || number == 8)) begin
+            red = 3'b111;
+            green = 3'b111;
+            blue = 2'b11;
+        end
+		  //left bottom vertical
+        else if (vc > 320 && vc < 345 && hc > 40 + left_boundary && hc < 40 + left_boundary + 5 &&
+		  (number == 0 || number == 1 || number == 2 || number == 6 || number == 8)) begin
+            red = 3'b111;
+            green = 3'b111;
+            blue = 2'b11;
+        end
+		  //right bottom vertical
+        else if (vc > 320 && vc < 345 && hc > 40 + left_boundary + 25 && hc < 40 + left_boundary + 30 &&
+		  (number == 0 || number == 3 || number == 4 || number == 5 || number == 6 || number == 7 || number == 8 || number == 9)) begin
+            red = 3'b111;
+            green = 3'b111;
+            blue = 2'b11;
+        end		  
+        else begin
+            makeBlack();
+        end	
+	end
+	//tens
+	else if (hc > left_boundary + 80 && hc < left_boundary + 120) begin
+        // 0
+		  // top horizontal
+        if (vc > 300 && vc < 305 && hc > 80 + left_boundary && hc < 80 + left_boundary + 30 &&
+				(ten == 0 || ten == 2 || ten == 3 || ten == 5 || ten == 6 || ten == 7 || ten == 8 || ten == 9)) begin
+            red = 3'b111;
+            green = 3'b111;
+            blue = 2'b11;
+        end
+		  //middle horizontal
+        else if (vc > 320 && vc < 325 && hc > 80 + left_boundary && hc < 80 + left_boundary + 30 &&
+		  (ten == 2 || ten == 3 || ten == 4 || ten == 5 || ten == 6 || ten == 8 || ten == 9)) begin
+            red = 3'b111;
+            green = 3'b111;
+            blue = 2'b11;
+        end
+		  //left top vertical
+        else if (vc > 300 && vc < 325 && hc > 80 + left_boundary && hc < 80 + left_boundary + 5 &&
+		  (ten == 0 || ten == 1 || ten == 4 || ten == 5 || ten == 6 || ten == 8 || ten == 9)) begin
+            red = 3'b111;
+            green = 3'b111;
+            blue = 2'b11;
+        end
+		  //right top vertical
+        else if (vc > 300 && vc < 325 && hc > 80 + left_boundary + 25 && hc < 80 + left_boundary + 30 &&
+		  (ten == 0 || ten == 2 || ten == 3 || ten == 4 || ten == 7 || ten == 8 || ten == 9)) begin
+            red = 3'b111;
+            green = 3'b111;
+            blue = 2'b11;
+        end
+		  //bottom horizontal
+        else if (vc > 340 && vc < 345 && hc > 80 + left_boundary && hc < 80 + left_boundary + 30 && 
+		  (ten == 0 || ten == 2 || ten == 3 || ten == 5 || ten == 6 || ten == 8)) begin
+            red = 3'b111;
+            green = 3'b111;
+            blue = 2'b11;
+        end
+		  //left bottom vertical
+        else if (vc > 320 && vc < 345 && hc > 80 + left_boundary && hc < 80 + left_boundary + 5 &&
+		  (ten == 0 || ten == 1 || ten == 2 || ten == 6 || ten == 8)) begin
+            red = 3'b111;
+            green = 3'b111;
+            blue = 2'b11;
+        end
+		  //right bottom vertical
+        else if (vc > 320 && vc < 345 && hc > 80 + left_boundary + 25 && hc < 80 + left_boundary + 30 &&
+		  (ten == 0 || ten == 3 || ten == 4 || ten == 5 || ten == 6 || ten == 7 || ten == 8 || ten == 9)) begin
+            red = 3'b111;
+            green = 3'b111;
+            blue = 2'b11;
+        end		  
+        else begin
+            makeBlack();
+        end	
+	end
+	//ones
+	else if (hc > left_boundary + 120 && hc < left_boundary + 160) begin
+        // 0
+		  // top horizontal
+        if (vc > 300 && vc < 305 && hc > 120 + left_boundary && hc < 120 + left_boundary + 30 &&
+				(number == 0 || number == 2 || number == 3 || number == 5 || number == 6 || number == 7 || number == 8 || number == 9)) begin
+            red = 3'b111;
+            green = 3'b111;
+            blue = 2'b11;
+        end
+		  //middle horizontal
+        else if (vc > 320 && vc < 325 && hc > 120+left_boundary && hc < 120+left_boundary + 30 &&
+		  (number == 2 || number == 3 || number == 4 || number == 5 || number == 6 || number == 8 || number == 9)) begin
+            red = 3'b111;
+            green = 3'b111;
+            blue = 2'b11;
+        end
+		  //left top vertical
+        else if (vc > 300 && vc < 325 && hc > 120+left_boundary && hc < 120+left_boundary + 5 &&
+		  (number == 0 || number == 1 || number == 4 || number == 5 || number == 6 || number == 8 || number == 9)) begin
+            red = 3'b111;
+            green = 3'b111;
+            blue = 2'b11;
+        end
+		  //right top vertical
+        else if (vc > 300 && vc < 325 && hc > 120+left_boundary + 25 && hc < 120+left_boundary + 30 &&
+		  (number == 0 || number == 2 || number == 3 || number == 4 || number == 7 || number == 8 || number == 9)) begin
+            red = 3'b111;
+            green = 3'b111;
+            blue = 2'b11;
+        end
+		  //bottom horizontal
+        else if (vc > 340 && vc < 345 && hc > 120+left_boundary && hc < 120+left_boundary + 30 && 
+		  (number == 0 || number == 2 || number == 3 || number == 5 || number == 6 || number == 8)) begin
+            red = 3'b111;
+            green = 3'b111;
+            blue = 2'b11;
+        end
+		  //left bottom vertical
+        else if (vc > 320 && vc < 345 && hc > 120+left_boundary && hc < 120+left_boundary + 5 &&
+		  (number == 0 || number == 1 || number == 2 || number == 6 || number == 8)) begin
+            red = 3'b111;
+            green = 3'b111;
+            blue = 2'b11;
+        end
+		  //right bottom vertical
+        else if (vc > 320 && vc < 345 && hc > 120+left_boundary + 25 && hc < 120+left_boundary + 30 &&
+		  (number == 0 || number == 3 || number == 4 || number == 5 || number == 6 || number == 7 || number == 8 || number == 9)) begin
+            red = 3'b111;
+            green = 3'b111;
+            blue = 2'b11;
+        end		  
+        else begin
+            makeBlack();
+        end	
+	end
+	else begin
+		makeBlack();
+	end;
 end
 endtask
 
