@@ -89,34 +89,27 @@ wire [9:0] r_offset;
 assign r_offset = hc - (r_left + width / 2);
 
 reg [2:0] score;
-reg bounce;
-reg [15:0] bounce_count;
-
-parameter bounce_max = 20;
 
 initial begin
 	score <= 0;
-	bounce <= 0;
 end
 
-always @ (decode, bclk) begin
-	//left
-	if (decode == 3'b000 && !bounce) begin
-		score <= score + 1;
-		bounce <= 1;
-		$display("setting bounce");
-	end
-	
-	if (bclk) begin
-		if (bounce_count < bounce_max) begin
-			bounce_count <= bounce_count + 1;
-		end
-		else begin
-			bounce_count <= 0;
-			bounce <= 0;
-			$display("unsetting bounce");
-		end
-	end
+wire arst_i;
+wire rst;
+reg [1:0] arst_ff;
+
+assign arst_i = !decode;
+assign rst = arst_ff[0];
+
+always @ (posedge bclk or posedge arst_i) begin
+	if (arst_i)
+		arst_ff <= 2'b11;
+	else
+		arst_ff <= {1'b0, arst_ff[1]};
+end
+
+always @ (posedge rst) begin
+	score <= score + 1;
 end
 
 always @ (hc, vc) begin

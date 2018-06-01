@@ -39,5 +39,5 @@ end
 // 100Mhz ÷ 2^2 = 25MHz
 assign pclk = counter[1];
 assign sclk = counter[10];
-assign bclk = counter[24];
+assign bclk = counter[11];
 endmodule
