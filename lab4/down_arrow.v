@@ -375,12 +375,14 @@ endtask
 task displayScore;
 input [9:0] score;
 begin
-	displayDigit(score / 10, score % 10, 280);
+	displayDigit(score / 1000, score / 100, score / 10, score % 10, 280);
 	
 end
 endtask
 
 task displayDigit;
+input [3:0] thousand;
+input [3:0] hundred;
 input [3:0] ten;
 input [3:0] number;
 input [9:0] left_boundary;
@@ -390,52 +392,40 @@ begin
         // 0
 		  // top horizontal
         if (vc > 300 && vc < 305 && hc > left_boundary && hc < left_boundary + 30 &&
-				(number == 0 || number == 2 || number == 3 || number == 5 || number == 6 || number == 7 || number == 8 || number == 9)) begin
-            red = 3'b111;
-            green = 3'b111;
-            blue = 2'b11;
+				(thousand == 0 || thousand == 2 || thousand == 3 || thousand == 5 || thousand == 6 || thousand == 7 || thousand == 8 || thousand == 9)) begin
+            makeWhite();
         end
 		  //middle horizontal
         else if (vc > 320 && vc < 325 && hc > left_boundary && hc < left_boundary + 30 &&
-		  (number == 2 || number == 3 || number == 4 || number == 5 || number == 6 || number == 8 || number == 9)) begin
-            red = 3'b111;
-            green = 3'b111;
-            blue = 2'b11;
+		  (thousand == 2 || thousand == 3 || thousand == 4 || thousand == 5 || thousand == 6 || thousand == 8 || thousand == 9)) begin
+            makeWhite();
         end
 		  //left top vertical
         else if (vc > 300 && vc < 325 && hc > left_boundary && hc < left_boundary + 5 &&
-		  (number == 0 || number == 1 || number == 4 || number == 5 || number == 6 || number == 8 || number == 9)) begin
-            red = 3'b111;
-            green = 3'b111;
-            blue = 2'b11;
+		  (thousand == 0 || thousand == 1 || thousand == 4 || thousand == 5 || thousand == 6 || thousand == 8 || thousand == 9)) begin
+            makeWhite();
         end
 		  //right top vertical
         else if (vc > 300 && vc < 325 && hc > left_boundary + 25 && hc < left_boundary + 30 &&
-		  (number == 0 || number == 2 || number == 3 || number == 4 || number == 7 || number == 8 || number == 9)) begin
+		  (thousand == 0 || thousand == 2 || thousand == 3 || thousand == 4 || thousand == 7 || thousand == 8 || thousand == 9)) begin
             red = 3'b111;
             green = 3'b111;
             blue = 2'b11;
         end
 		  //bottom horizontal
         else if (vc > 340 && vc < 345 && hc > left_boundary && hc < left_boundary + 30 && 
-		  (number == 0 || number == 2 || number == 3 || number == 5 || number == 6 || number == 8)) begin
-            red = 3'b111;
-            green = 3'b111;
-            blue = 2'b11;
+		  (thousand == 0 || thousand == 2 || thousand == 3 || thousand == 5 || thousand == 6 || thousand == 8)) begin
+            makeWhite();
         end
 		  //left bottom vertical
         else if (vc > 320 && vc < 345 && hc > left_boundary && hc < left_boundary + 5 &&
-		  (number == 0 || number == 1 || number == 2 || number == 6 || number == 8)) begin
-            red = 3'b111;
-            green = 3'b111;
-            blue = 2'b11;
+		  (thousand == 0 || thousand == 1 || thousand == 2 || thousand == 6 || thousand == 8)) begin
+            makeWhite();
         end
 		  //right bottom vertical
         else if (vc > 320 && vc < 345 && hc > left_boundary + 25 && hc < left_boundary + 30 &&
-		  (number == 0 || number == 3 || number == 4 || number == 5 || number == 6 || number == 7 || number == 8 || number == 9)) begin
-            red = 3'b111;
-            green = 3'b111;
-            blue = 2'b11;
+		  (thousand == 0 || thousand == 3 || thousand == 4 || thousand == 5 || thousand == 6 || thousand == 7 || thousand == 8 || thousand == 9)) begin
+            makeWhite();
         end		  
         else begin
             makeBlack();
@@ -446,49 +436,41 @@ begin
         // 0
 		  // top horizontal
         if (vc > 300 && vc < 305 && hc > left_boundary + 40 && hc < left_boundary + 30 + 40 &&
-				(number == 0 || number == 2 || number == 3 || number == 5 || number == 6 || number == 7 || number == 8 || number == 9)) begin
-            red = 3'b111;
-            green = 3'b111;
-            blue = 2'b11;
+			(hundred == 0 || hundred == 2 || hundred == 3 || hundred == 5 || hundred == 6 || hundred == 7 || hundred == 8 || hundred == 9)) begin
+            makeWhite();
         end
 		  //middle horizontal
         else if (vc > 320 && vc < 325 && hc > left_boundary + 40 && hc < left_boundary + 30 + 40 &&
-		  (number == 2 || number == 3 || number == 4 || number == 5 || number == 6 || number == 8 || number == 9)) begin
-            red = 3'b111;
-            green = 3'b111;
-            blue = 2'b11;
+		  (hundred == 2 || hundred == 3 || hundred == 4 || hundred == 5 || hundred == 6 || hundred == 8 || hundred == 9)) begin
+            makeWhite();
         end
 		  //left top vertical
         else if (vc > 300 && vc < 325 && hc > left_boundary + 40 && hc < 40 + left_boundary + 5 &&
-		  (number == 0 || number == 1 || number == 4 || number == 5 || number == 6 || number == 8 || number == 9)) begin
-            red = 3'b111;
-            green = 3'b111;
-            blue = 2'b11;
+		  (hundred == 0 || hundred == 1 || hundred == 4 || hundred == 5 || hundred == 6 || hundred == 8 || hundred == 9)) begin
+            makeWhite();
         end
 		  //right top vertical
         else if (vc > 300 && vc < 325 && hc > left_boundary + 25 + 40 && hc < 40 + left_boundary + 30 &&
-		  (number == 0 || number == 2 || number == 3 || number == 4 || number == 7 || number == 8 || number == 9)) begin
-            red = 3'b111;
-            green = 3'b111;
-            blue = 2'b11;
+		  (hundred == 0 || hundred == 2 || hundred == 3 || hundred == 4 || hundred == 7 || hundred == 8 || hundred == 9)) begin
+            makeWhite();
         end
 		  //bottom horizontal
         else if (vc > 340 && vc < 345 && hc > 40 + left_boundary && hc < 40 + left_boundary + 30 && 
-		  (number == 0 || number == 2 || number == 3 || number == 5 || number == 6 || number == 8)) begin
+		  (hundred == 0 || hundred == 2 || hundred == 3 || hundred == 5 || hundred == 6 || hundred == 8)) begin
             red = 3'b111;
             green = 3'b111;
             blue = 2'b11;
         end
 		  //left bottom vertical
         else if (vc > 320 && vc < 345 && hc > 40 + left_boundary && hc < 40 + left_boundary + 5 &&
-		  (number == 0 || number == 1 || number == 2 || number == 6 || number == 8)) begin
+		  (hundred == 0 || hundred == 1 || hundred == 2 || hundred == 6 || hundred == 8)) begin
             red = 3'b111;
             green = 3'b111;
             blue = 2'b11;
         end
 		  //right bottom vertical
         else if (vc > 320 && vc < 345 && hc > 40 + left_boundary + 25 && hc < 40 + left_boundary + 30 &&
-		  (number == 0 || number == 3 || number == 4 || number == 5 || number == 6 || number == 7 || number == 8 || number == 9)) begin
+		  (hundred == 0 || hundred == 3 || hundred == 4 || hundred == 5 || hundred == 6 || hundred == 7 || hundred == 8 || hundred == 9)) begin
             red = 3'b111;
             green = 3'b111;
             blue = 2'b11;
