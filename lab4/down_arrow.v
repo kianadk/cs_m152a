@@ -333,6 +333,13 @@ endtask
 parameter d1l = 200;
 parameter d1t = 100;
 parameter d2t = 150;
+parameter d3t = 200;
+parameter stage1_top = 300;
+parameter stage2_top = 350;
+parameter stage3_top = 400;
+parameter stage_left = 200;
+wire start_offset;
+assign start_offset = vc - ((d3t+45) + 45 / 2);
 
 task drawStart;
 begin
@@ -560,6 +567,724 @@ begin
         else 
             makeBlack();	
 	end
+	//r(evolution)
+	else if (hc > d1l && hc < d1l+40 && vc > d3t && vc < d3t+45) begin
+ 		  //middle horizontal
+         if (vc > d3t+20 && vc < d3t+25 && hc > d1l && hc < d1l+30) begin
+             makeWhite();
+         end
+ 		  //left bottom vertical
+         else if (vc > d3t+20 && vc < d3t+45 && hc > d1l && hc < d1l+5) begin          
+             makeWhite();
+         end	  
+         else begin
+             makeBlack();
+         end	
+ 	end
+	//e(volution)
+	else if (hc > d1l+40 && hc < d1l+80 && vc > d3t && vc < d3t+45) begin
+ 		  // top horizontal
+         if (vc > d3t && vc < d3t+5 && hc > d1l+40 && hc < d1l+70) begin
+             makeWhite();
+         end
+ 		  //middle horizontal
+         else if (vc > d3t+20 && vc < d3t+25 && hc > d1l+40 && hc < d1l+70) begin
+             makeWhite();
+         end
+ 		  //left top vertical
+         else if (vc > d3t && vc < d3t+25 && hc > d1l+40 && hc < d1l+45) begin
+             makeWhite();
+         end
+ 		  //bottom horizontal
+         else if (vc > d3t+40 && vc < d3t+45 && hc > d1l+40 && hc < d1l+70) begin
+             makeWhite();
+         end
+ 		  //left bottom vertical
+         else if (vc > d3t+20 && vc < d3t+45 && hc > d1l+40 && hc < d1l+45) begin          
+             makeWhite();
+         end		  
+         else begin
+             makeBlack();
+         end	
+ 	end
+	//v(olution)
+	else if (hc > d1l+80 && hc < d1l+120 && vc > d3t && vc < d3t+45) begin
+		// down arrow
+			if (vc <= d3t+45 + (45 / 2)) begin
+				if (hc >= (d1l+80) + 40 / 3 && hc < (d1l+120) - 40 / 3) begin
+					makeWhite();
+				end
+				else begin
+					makeBlack();
+				end
+			end
+
+			else if (hc >= (d1l+80) + start_offset && hc < (d1l+120) - start_offset) begin
+				makeWhite();
+			end
+			
+			else begin
+				makeBlack();
+			end
+ 	end
+	//o(lution)
+	else if (hc > d1l+120 && hc < d1l+160 && vc > d3t && vc < d3t+45) begin
+ 		  //middle horizontal
+         if (vc > d3t+20 && vc < d3t+25 && hc > d1l+120 && hc < d1l+150) begin
+             makeWhite();
+         end
+ 		  //bottom horizontal
+         else if (vc > d3t+40 && vc < d3t+45 && hc > d1l+120 && hc < d1l+150) begin
+             makeWhite();
+         end
+ 		  //left bottom vertical
+         else if (vc > d3t+20 && vc < d3t+45 && hc > d1l+120 && hc < d1l+125) begin          
+             makeWhite();
+         end
+ 		  //right bottom vertical
+         else if (vc > d3t+20 && vc < d3t+45 && hc > d1l+145 && hc < d1l+150) begin           
+ 				makeWhite();
+         end		  
+         else begin
+             makeBlack();
+         end	
+ 	end
+	//l(ution)
+	else if (hc > d1l+160 && hc < d1l+200 && vc > d3t && vc < d3t+45) begin
+ 		  //left top vertical
+         if (vc > d3t && vc < d3t+25 && hc > d1l+160 && hc < d1l+165) begin
+             makeWhite();
+         end
+ 		  //left bottom vertical
+         else if (vc > d3t+20 && vc < d3t+45 && hc > d1l+160 && hc < d1l+165) begin          
+             makeWhite();
+         end		  
+         else begin
+             makeBlack();
+         end	
+ 	end	
+	//u(tion)
+	else if (hc > d1l+200 && hc < d1l+240 && vc > d3t && vc < d3t+45) begin
+ 		  //left top vertical
+         if (vc > d3t && vc < d3t+25 && hc > d1l+200 && hc < d1l+205) begin
+             makeWhite();
+         end
+ 		  //right top vertical
+         else if (vc > d3t && vc < d3t+25 && hc > d1l+225 && hc < d1l+230) begin
+             makeWhite();
+         end
+ 		  //bottom horizontal
+         else if (vc > d3t+40 && vc < d3t+45 && hc > d1l+200 && hc < d1l+230) begin
+             makeWhite();
+         end
+ 		  //left bottom vertical
+         else if (vc > d3t+20 && vc < d3t+45 && hc > d1l+200 && hc < d1l+205) begin          
+             makeWhite();
+         end
+ 		  //right bottom vertical
+         else if (vc > d3t+20 && vc < d3t+45 && hc > d1l+225 && hc < d1l+230) begin           
+ 				makeWhite();
+         end		  
+         else begin
+             makeBlack();
+         end	
+ 	end
+	//t(ion)
+	else if (hc > d1l+240 && hc < d1l+280 && vc > d3t && vc < d3t+45) begin
+ 		  //middle horizontal
+         if (vc > d3t+20 && vc < d3t+25 && hc > d1l+240 && hc < d1l+270) begin
+             makeWhite();
+         end
+ 		  //left top vertical
+         else if (vc > d3t && vc < d3t+25 && hc > d1l+240 && hc < d1l+245) begin
+             makeWhite();
+         end
+ 		  //bottom horizontal
+         else if (vc > d3t+40 && vc < d3t+45 && hc > d1l+240 && hc < d1l+270) begin
+             makeWhite();
+         end
+ 		  //left bottom vertical
+         else if (vc > d3t+20 && vc < d3t+45 && hc > d1l+240 && hc < d1l+245) begin          
+             makeWhite();
+         end		  
+         else begin
+             makeBlack();
+         end	
+ 	end
+	//i(on)
+	else if (hc > d1l+280 && hc < d1l+320 && vc > d3t && vc < d3t+45) begin
+ 		  //left top vertical
+         if (vc > d3t && vc < d3t+25 && hc > d1l+280 && hc < d1l+285) begin
+             makeWhite();
+         end
+ 		  //left bottom vertical
+         else if (vc > d3t+20 && vc < d3t+45 && hc > d1l+280 && hc < d1l+285) begin          
+             makeWhite();
+         end	  
+         else begin
+             makeBlack();
+         end	
+ 	end
+	//o(n)
+	else if (hc > d1l+320 && hc < d1l+360 && vc > d3t && vc < d3t+45) begin
+ 		  // top horizontal
+         if (vc > d3t && vc < d3t+5 && hc > d1l+320 && hc < d1l+350) begin
+             makeWhite();
+         end
+ 		  //left top vertical
+         else if (vc > d3t && vc < d3t+25 && hc > d1l+320 && hc < d1l+325) begin
+             makeWhite();
+         end
+ 		  //right top vertical
+         else if (vc > d3t && vc < d3t+25 && hc > d1l+345 && hc < d1l+350) begin
+             makeWhite();
+         end
+ 		  //bottom horizontal
+         else if (vc > d3t+40 && vc < d3t+45 && hc > d1l+320 && hc < d1l+350) begin
+             makeWhite();
+         end
+ 		  //left bottom vertical
+         else if (vc > d3t+20 && vc < d3t+45 && hc > d1l+320 && hc < d1l+325) begin          
+             makeWhite();
+         end
+ 		  //right bottom vertical
+         else if (vc > d3t+20 && vc < d3t+45 && hc > d1l+345 && hc < d1l+350) begin           
+ 				makeWhite();
+         end		  
+         else begin
+             makeBlack();
+         end	
+ 	end
+	//n
+	else if (hc > d1l+360 && hc < d1l+400 && vc > d3t && vc < d3t+45) begin
+ 		  //middle horizontal
+         if (vc > d3t+20 && vc < d3t+25 && hc > d1l+360 && hc < d1l+390) begin
+             makeWhite();
+         end
+ 		  //left bottom vertical
+         else if (vc > d3t+20 && vc < d3t+45 && hc > d1l+360 && hc < d1l+365) begin          
+             makeWhite();
+         end
+ 		  //right bottom vertical
+         else if (vc > d3t+20 && vc < d3t+45 && hc > d1l+385 && hc < d1l+390) begin           
+ 				makeWhite();
+         end		  
+         else begin
+             makeBlack();
+         end	
+ 	end
+	/////////////////////////
+	//draw easy-medium-hard//
+	/////////////////////////
+	//s(tage 1)
+	else if (hc > stage_left && hc < stage_left+40 && vc > stage1_top && vc < stage1_top+45) begin
+ 		  // top horizontal
+         if (vc > stage1_top && vc < stage1_top+5 && hc > stage_left && hc < stage_left+30) begin
+             makeWhite();
+         end
+ 		  //middle horizontal
+         else if (vc > stage1_top+20 && vc < stage1_top+25 && hc > stage_left && hc < stage_left+30) begin
+             makeWhite();
+         end
+ 		  //left top vertical
+         else if (vc > stage1_top && vc < stage1_top+25 && hc > stage_left && hc < stage_left+5) begin
+             makeWhite();
+         end
+ 		  //bottom horizontal
+         else if (vc > stage1_top+40 && vc < stage1_top+45 && hc > stage_left && hc < stage_left+30) begin
+             makeWhite();
+         end
+ 		  //right bottom vertical
+         else if (vc > stage1_top+20 && vc < stage1_top+45 && hc > stage_left+25 && hc < stage_left+30) begin           
+ 				makeWhite();
+         end		  
+         else begin
+             makeBlack();
+         end	
+ 	end
+	//t(age 1)
+	else if (hc > stage_left+40 && hc < stage_left+80 && vc > stage1_top && vc < stage1_top+45) begin
+ 		  //middle horizontal
+         if (vc > stage1_top+20 && vc < stage1_top+25 && hc > stage_left+40 && hc < stage_left+70) begin
+             makeWhite();
+         end
+ 		  //left top vertical
+         else if (vc > stage1_top && vc < stage1_top+25 && hc > stage_left+40 && hc < stage_left+45) begin
+             makeWhite();
+         end
+ 		  //bottom horizontal
+         else if (vc > stage1_top+40 && vc < stage1_top+45 && hc > stage_left+40 && hc < stage_left+70) begin
+             makeWhite();
+         end
+ 		  //left bottom vertical
+         else if (vc > stage1_top+20 && vc < stage1_top+45 && hc > stage_left+40 && hc < stage_left+45) begin          
+             makeWhite();
+         end		  
+         else begin
+             makeBlack();
+         end	
+ 	end
+	//a(ge 1)
+	else if (hc > stage_left+80 && hc < stage_left+120 && vc > stage1_top && vc < stage1_top+45) begin
+ 		  // top horizontal
+         if (vc > stage1_top && vc < stage1_top+5 && hc > stage_left && hc+80 < stage_left+110) begin
+             makeWhite();
+         end
+ 		  //middle horizontal
+         else if (vc > stage1_top+20 && vc < stage1_top+25 && hc > stage_left+80 && hc < stage_left+110) begin
+             makeWhite();
+         end
+ 		  //left top vertical
+         else if (vc > stage1_top && vc < stage1_top+25 && hc > stage_left+80 && hc < stage_left+85) begin
+             makeWhite();
+         end
+ 		  //right top vertical
+         else if (vc > stage1_top && vc < stage1_top+25 && hc > stage_left+105 && hc < stage_left+110) begin
+             makeWhite();
+         end
+ 		  //left bottom vertical
+         else if (vc > stage1_top+20 && vc < stage1_top+45 && hc > stage_left+80 && hc < stage_left+85) begin          
+             makeWhite();
+         end
+ 		  //right bottom vertical
+         else if (vc > stage1_top+20 && vc < stage1_top+45 && hc > stage_left+105 && hc < stage_left+110) begin           
+ 				makeWhite();
+         end		  
+         else begin
+             makeBlack();
+         end	
+ 	end
+	//g(e 1)
+	else if (hc > stage_left+120 && hc < stage_left+160 && vc > stage1_top && vc < stage1_top+45) begin
+ 		  // top horizontal
+         if (vc > stage1_top && vc < stage1_top+5 && hc > stage_left+120 && hc < stage_left+150) begin
+             makeWhite();
+         end
+ 		  //middle horizontal
+         else if (vc > stage1_top+20 && vc < stage1_top+25 && hc > stage_left+120 && hc < stage_left+150) begin
+             makeWhite();
+         end
+ 		  //left top vertical
+         else if (vc > stage1_top && vc < stage1_top+25 && hc > stage_left+120 && hc < stage_left+125) begin
+             makeWhite();
+         end
+ 		  //right top vertical
+         else if (vc > stage1_top && vc < stage1_top+25 && hc > stage_left+155 && hc < stage_left+150) begin
+             makeWhite();
+         end
+ 		  //bottom horizontal
+         else if (vc > stage1_top+40 && vc < stage1_top+45 && hc > stage_left+120 && hc < stage_left+150) begin
+             makeWhite();
+         end
+ 		  //right bottom vertical
+         else if (vc > stage1_top+20 && vc < stage1_top+45 && hc > stage_left+145 && hc < stage_left+150) begin           
+ 				makeWhite();
+         end		  
+         else begin
+             makeBlack();
+         end	
+ 	end
+	//e( 1)
+	else if (hc > stage_left+160 && hc < stage_left+200 && vc > stage1_top && vc < stage1_top+45) begin
+ 		  // top horizontal
+         if (vc > stage1_top && vc < stage1_top+5 && hc > stage_left+160 && hc < stage_left+190) begin
+             makeWhite();
+         end
+ 		  //middle horizontal
+         else if (vc > stage1_top+20 && vc < stage1_top+25 && hc > stage_left+160 && hc < stage_left+190) begin
+             makeWhite();
+         end
+ 		  //left top vertical
+         else if (vc > stage1_top && vc < stage1_top+25 && hc > stage_left+160 && hc < stage_left+165) begin
+             makeWhite();
+         end
+ 		  //bottom horizontal
+         else if (vc > stage1_top+40 && vc < stage1_top+45 && hc > stage_left+160 && hc < stage_left+190) begin
+             makeWhite();
+         end
+ 		  //left bottom vertical
+         else if (vc > stage1_top+20 && vc < stage1_top+45 && hc > stage_left+160 && hc < stage_left+165) begin          
+             makeWhite();
+         end		  
+         else begin
+             makeBlack();
+         end	
+ 	end
+	// 1
+	else if (hc > stage_left+240 && hc < stage_left+280 && vc > stage1_top && vc < stage1_top+45) begin
+ 		  //left top vertical
+         if (vc > stage1_top && vc < stage1_top+25 && hc > stage_left+240 && hc < stage_left+245) begin
+             makeWhite();
+         end
+ 		  //left bottom vertical
+         else if (vc > stage1_top+20 && vc < stage1_top+45 && hc > stage_left+240 && hc < stage_left+245) begin          
+             makeWhite();
+         end		  
+         else begin
+             makeBlack();
+         end	
+ 	end
+	////////////
+	//stage 2
+	//////////////
+	//s(tage 2)
+	else if (hc > stage_left && hc < stage_left+40 && vc > stage2_top && vc < stage2_top+45) begin
+ 		  // top horizontal
+         if (vc > stage2_top && vc < stage2_top+5 && hc > stage_left && hc < stage_left+30) begin
+             makeWhite();
+         end
+ 		  //middle horizontal
+         else if (vc > stage2_top+20 && vc < stage2_top+25 && hc > stage_left && hc < stage_left+30) begin
+             makeWhite();
+         end
+ 		  //left top vertical
+         else if (vc > stage2_top && vc < stage2_top+25 && hc > stage_left && hc < stage_left+5) begin
+             makeWhite();
+         end
+ 		  //bottom horizontal
+         else if (vc > stage2_top+40 && vc < stage2_top+45 && hc > stage_left && hc < stage_left+30) begin
+             makeWhite();
+         end
+ 		  //right bottom vertical
+         else if (vc > stage2_top+20 && vc < stage2_top+45 && hc > stage_left+25 && hc < stage_left+30) begin           
+ 				makeWhite();
+         end		  
+         else begin
+             makeBlack();
+         end	
+ 	end
+	//t(age 2)
+	else if (hc > stage_left+40 && hc < stage_left+80 && vc > stage2_top && vc < stage2_top+45) begin
+ 		  //middle horizontal
+         if (vc > stage2_top+20 && vc < stage2_top+25 && hc > stage_left+40 && hc < stage_left+70) begin
+             makeWhite();
+         end
+ 		  //left top vertical
+         else if (vc > stage2_top && vc < stage2_top+25 && hc > stage_left+40 && hc < stage_left+45) begin
+             makeWhite();
+         end
+ 		  //bottom horizontal
+         else if (vc > stage2_top+40 && vc < stage2_top+45 && hc > stage_left+40 && hc < stage_left+70) begin
+             makeWhite();
+         end
+ 		  //left bottom vertical
+         else if (vc > stage2_top+20 && vc < stage2_top+45 && hc > stage_left+40 && hc < stage_left+45) begin          
+             makeWhite();
+         end		  
+         else begin
+             makeBlack();
+         end	
+ 	end
+	//a(ge 2)
+	else if (hc > stage_left+80 && hc < stage_left+120 && vc > stage2_top && vc < stage2_top+45) begin
+ 		  // top horizontal
+         if (vc > stage2_top && vc < stage2_top+5 && hc > stage_left && hc+80 < stage_left+110) begin
+             makeWhite();
+         end
+ 		  //middle horizontal
+         else if (vc > stage2_top+20 && vc < stage2_top+25 && hc > stage_left+80 && hc < stage_left+110) begin
+             makeWhite();
+         end
+ 		  //left top vertical
+         else if (vc > stage2_top && vc < stage2_top+25 && hc > stage_left+80 && hc < stage_left+85) begin
+             makeWhite();
+         end
+ 		  //right top vertical
+         else if (vc > stage2_top && vc < stage2_top+25 && hc > stage_left+105 && hc < stage_left+110) begin
+             makeWhite();
+         end
+ 		  //left bottom vertical
+         else if (vc > stage2_top+20 && vc < stage2_top+45 && hc > stage_left+80 && hc < stage_left+85) begin          
+             makeWhite();
+         end
+ 		  //right bottom vertical
+         else if (vc > stage2_top+20 && vc < stage2_top+45 && hc > stage_left+105 && hc < stage_left+110) begin           
+ 				makeWhite();
+         end		  
+         else begin
+             makeBlack();
+         end	
+ 	end
+	//g(e 2)
+	else if (hc > stage_left+120 && hc < stage_left+160 && vc > stage2_top && vc < stage2_top+45) begin
+ 		  // top horizontal
+         if (vc > stage2_top && vc < stage2_top+5 && hc > stage_left+120 && hc < stage_left+150) begin
+             makeWhite();
+         end
+ 		  //middle horizontal
+         else if (vc > stage2_top+20 && vc < stage2_top+25 && hc > stage_left+120 && hc < stage_left+150) begin
+             makeWhite();
+         end
+ 		  //left top vertical
+         else if (vc > stage2_top && vc < stage2_top+25 && hc > stage_left+120 && hc < stage_left+125) begin
+             makeWhite();
+         end
+ 		  //right top vertical
+         else if (vc > stage2_top && vc < stage2_top+25 && hc > stage_left+155 && hc < stage_left+150) begin
+             makeWhite();
+         end
+ 		  //bottom horizontal
+         else if (vc > stage2_top+40 && vc < stage2_top+45 && hc > stage_left+120 && hc < stage_left+150) begin
+             makeWhite();
+         end
+ 		  //right bottom vertical
+         else if (vc > stage2_top+20 && vc < stage2_top+45 && hc > stage_left+145 && hc < stage_left+150) begin           
+ 				makeWhite();
+         end		  
+         else begin
+             makeBlack();
+         end	
+ 	end
+	//e( 2)
+	else if (hc > stage_left+160 && hc < stage_left+200 && vc > stage2_top && vc < stage2_top+45) begin
+ 		  // top horizontal
+         if (vc > stage2_top && vc < stage2_top+5 && hc > stage_left+160 && hc < stage_left+190) begin
+             makeWhite();
+         end
+ 		  //middle horizontal
+         else if (vc > stage2_top+20 && vc < stage2_top+25 && hc > stage_left+160 && hc < stage_left+190) begin
+             makeWhite();
+         end
+ 		  //left top vertical
+         else if (vc > stage2_top && vc < stage2_top+25 && hc > stage_left+160 && hc < stage_left+165) begin
+             makeWhite();
+         end
+ 		  //bottom horizontal
+         else if (vc > stage2_top+40 && vc < stage2_top+45 && hc > stage_left+160 && hc < stage_left+190) begin
+             makeWhite();
+         end
+ 		  //left bottom vertical
+         else if (vc > stage2_top+20 && vc < stage2_top+45 && hc > stage_left+160 && hc < stage_left+165) begin          
+             makeWhite();
+         end		  
+         else begin
+             makeBlack();
+         end	
+ 	end
+	// 2
+	else if (hc > stage_left+240 && hc < stage_left+280 && vc > stage2_top && vc < stage2_top+45) begin
+ 		  // top horizontal
+         if (vc > stage2_top && vc < stage2_top+5 && hc > stage_left+240 && hc < stage_left+270) begin
+             makeWhite();
+         end
+ 		  //middle horizontal
+         else if (vc > stage2_top+20 && vc < stage2_top+25 && hc > stage_left+240 && hc < stage_left+270) begin
+             makeWhite();
+         end
+			//right top vertical
+         else if (vc > stage2_top && vc < stage2_top+25 && hc > stage_left+265 && hc < stage_left+270) begin
+             makeWhite();
+         end
+ 		  //bottom horizontal
+         else if (vc > stage2_top+40 && vc < stage2_top+45 && hc > stage_left+240 && hc < stage_left+270) begin
+             makeWhite();
+         end
+ 		  //left bottom vertical
+         else if (vc > stage2_top+20 && vc < stage2_top+45 && hc > stage_left+240 && hc < stage_left+245) begin          
+             makeWhite();
+         end		  
+         else begin
+             makeBlack();
+         end	
+ 	end
+	/////////////////////////
+	//stage 3
+	/////////////////
+	//s(tage 3)
+	else if (hc > stage_left && hc < stage_left+40 && vc > stage3_top && vc < stage3_top+45) begin
+ 		  // top horizontal
+         if (vc > stage3_top && vc < stage3_top+5 && hc > stage_left && hc < stage_left+30) begin
+             makeWhite();
+         end
+ 		  //middle horizontal
+         else if (vc > stage3_top+20 && vc < stage3_top+25 && hc > stage_left && hc < stage_left+30) begin
+             makeWhite();
+         end
+ 		  //left top vertical
+         else if (vc > stage3_top && vc < stage3_top+25 && hc > stage_left && hc < stage_left+5) begin
+             makeWhite();
+         end
+ 		  //bottom horizontal
+         else if (vc > stage3_top+40 && vc < stage3_top+45 && hc > stage_left && hc < stage_left+30) begin
+             makeWhite();
+         end
+ 		  //right bottom vertical
+         else if (vc > stage3_top+20 && vc < stage3_top+45 && hc > stage_left+25 && hc < stage_left+30) begin           
+ 				makeWhite();
+         end		  
+         else begin
+             makeBlack();
+         end	
+ 	end
+	//t(age 3)
+	else if (hc > stage_left+40 && hc < stage_left+80 && vc > stage3_top && vc < stage3_top+45) begin
+ 		  //middle horizontal
+         if (vc > stage3_top+20 && vc < stage3_top+25 && hc > stage_left+40 && hc < stage_left+70) begin
+             makeWhite();
+         end
+ 		  //left top vertical
+         else if (vc > stage3_top && vc < stage3_top+25 && hc > stage_left+40 && hc < stage_left+45) begin
+             makeWhite();
+         end
+ 		  //bottom horizontal
+         else if (vc > stage3_top+40 && vc < stage3_top+45 && hc > stage_left+40 && hc < stage_left+70) begin
+             makeWhite();
+         end
+ 		  //left bottom vertical
+         else if (vc > stage3_top+20 && vc < stage3_top+45 && hc > stage_left+40 && hc < stage_left+45) begin          
+             makeWhite();
+         end		  
+         else begin
+             makeBlack();
+         end	
+ 	end
+	//a(ge 3)
+	else if (hc > stage_left+80 && hc < stage_left+120 && vc > stage3_top && vc < stage3_top+45) begin
+ 		  // top horizontal
+         if (vc > stage3_top && vc < stage3_top+5 && hc > stage_left && hc+80 < stage_left+110) begin
+             makeWhite();
+         end
+ 		  //middle horizontal
+         else if (vc > stage3_top+20 && vc < stage3_top+25 && hc > stage_left+80 && hc < stage_left+110) begin
+             makeWhite();
+         end
+ 		  //left top vertical
+         else if (vc > stage3_top && vc < stage3_top+25 && hc > stage_left+80 && hc < stage_left+85) begin
+             makeWhite();
+         end
+ 		  //right top vertical
+         else if (vc > stage3_top && vc < stage3_top+25 && hc > stage_left+105 && hc < stage_left+110) begin
+             makeWhite();
+         end
+ 		  //left bottom vertical
+         else if (vc > stage3_top+20 && vc < stage3_top+45 && hc > stage_left+80 && hc < stage_left+85) begin          
+             makeWhite();
+         end
+ 		  //right bottom vertical
+         else if (vc > stage3_top+20 && vc < stage3_top+45 && hc > stage_left+105 && hc < stage_left+110) begin           
+ 				makeWhite();
+         end		  
+         else begin
+             makeBlack();
+         end	
+ 	end
+	//g(e 3)
+	else if (hc > stage_left+120 && hc < stage_left+160 && vc > stage3_top && vc < stage3_top+45) begin
+ 		  // top horizontal
+         if (vc > stage2_top && vc < stage2_top+5 && hc > stage_left+120 && hc < stage_left+150) begin
+             makeWhite();
+         end
+ 		  //middle horizontal
+         else if (vc > stage3_top+20 && vc < stage3_top+25 && hc > stage_left+120 && hc < stage_left+150) begin
+             makeWhite();
+         end
+ 		  //left top vertical
+         else if (vc > stage3_top && vc < stage3_top+25 && hc > stage_left+120 && hc < stage_left+125) begin
+             makeWhite();
+         end
+ 		  //right top vertical
+         else if (vc > stage3_top && vc < stage3_top+25 && hc > stage_left+155 && hc < stage_left+150) begin
+             makeWhite();
+         end
+ 		  //bottom horizontal
+         else if (vc > stage3_top+40 && vc < stage3_top+45 && hc > stage_left+120 && hc < stage_left+150) begin
+             makeWhite();
+         end
+ 		  //right bottom vertical
+         else if (vc > stage3_top+20 && vc < stage3_top+45 && hc > stage_left+145 && hc < stage_left+150) begin           
+ 				makeWhite();
+         end		  
+         else begin
+             makeBlack();
+         end	
+ 	end
+	//e( 3)
+	else if (hc > stage_left+160 && hc < stage_left+200 && vc > stage3_top && vc < stage3_top+45) begin
+ 		  // top horizontal
+         if (vc > stage3_top && vc < stage3_top+5 && hc > stage_left+160 && hc < stage_left+190) begin
+             makeWhite();
+         end
+ 		  //middle horizontal
+         else if (vc > stage3_top+20 && vc < stage3_top+25 && hc > stage_left+160 && hc < stage_left+190) begin
+             makeWhite();
+         end
+ 		  //left top vertical
+         else if (vc > stage3_top && vc < stage3_top+25 && hc > stage_left+160 && hc < stage_left+165) begin
+             makeWhite();
+         end
+ 		  //bottom horizontal
+         else if (vc > stage3_top+40 && vc < stage3_top+45 && hc > stage_left+160 && hc < stage_left+190) begin
+             makeWhite();
+         end
+ 		  //left bottom vertical
+         else if (vc > stage3_top+20 && vc < stage3_top+45 && hc > stage_left+160 && hc < stage_left+165) begin          
+             makeWhite();
+         end		  
+         else begin
+             makeBlack();
+         end	
+ 	end
+	// 3
+	else if (hc > stage_left+240 && hc < stage_left+280 && vc > stage3_top && vc < stage3_top+45) begin
+ 		  // top horizontal
+         if (vc > stage3_top && vc < stage3_top+5 && hc > stage_left+240 && hc < stage_left+270) begin
+             makeWhite();
+         end
+ 		  //middle horizontal
+         else if (vc > stage3_top+20 && vc < stage3_top+25 && hc > stage_left+240 && hc < stage_left+270) begin
+             makeWhite();
+         end
+			//right top vertical
+         else if (vc > stage3_top && vc < stage3_top+25 && hc > stage_left+265 && hc < stage_left+270) begin
+             makeWhite();
+         end
+ 		  //bottom horizontal
+         else if (vc > stage3_top+40 && vc < stage3_top+45 && hc > stage_left+240 && hc < stage_left+270) begin
+             makeWhite();
+         end
+ 		  //right bottom vertical
+         else if (vc > stage3_top+20 && vc < stage3_top+45 && hc > stage_left+265 && hc < stage_left+270) begin          
+             makeWhite();
+         end		  
+         else begin
+             makeBlack();
+         end	
+ 	end	
+	///////
+	//8 at bottom leftish
+	else if (hc > d1l && hc < d1l+40 && vc > d3t && vc < d3t+45) begin
+ 		  // top horizontal
+         if (vc > d3t && vc < d3t+5 && hc > d1l && hc < d1l+30) begin
+             makeWhite();
+         end
+ 		  //middle horizontal
+         else if (vc > d3t+20 && vc < d3t+25 && hc > d1l && hc < d1l+30) begin
+             makeWhite();
+         end
+ 		  //left top vertical
+         else if (vc > d3t && vc < d3t+25 && hc > d1l && hc < d1l+5) begin
+             makeWhite();
+         end
+ 		  //right top vertical
+         else if (vc > d3t && vc < d3t+25 && hc > d1l+25 && hc < d1l+30) begin
+             makeWhite();
+         end
+ 		  //bottom horizontal
+         else if (vc > d3t+40 && vc < d3t+45 && hc > d1l && hc < d1l+30) begin
+             makeWhite();
+         end
+ 		  //left bottom vertical
+         else if (vc > d3t+20 && vc < d3t+45 && hc > d1l && hc < d1l+5) begin          
+             makeWhite();
+         end
+ 		  //right bottom vertical
+         else if (vc > d3t+20 && vc < d3t+45 && hc > d1l+25 && hc < d1l+30) begin           
+ 				makeWhite();
+         end		  
+         else begin
+             makeBlack();
+         end	
+ 	end
 	else begin
 		makeBlack();
 	end
