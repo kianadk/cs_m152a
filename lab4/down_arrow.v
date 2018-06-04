@@ -98,7 +98,8 @@ reg [3:0] r_score;
 reg [3:0] u_score;
 reg [3:0] d_score;
 
-reg gameState;
+reg [1:0] gameState;
+reg [1:0] stageState;
 
 
 wire [3:0] score;
@@ -109,36 +110,65 @@ initial begin
 	r_score <= 0;
 	u_score <= 0;
 	d_score <= 0;
-	gameState <= 0;
+	gameState <= startState;
+	stageState <= stage1;
 end
 
+parameter stage1 = 2'b00;
+parameter stage2 = 2'b01;
+parameter stage3 = 2'b10;
+parameter startState = 2'b00;
+parameter playState = 2'b01;
+parameter endState = 2'b10;
+
 always @ (posedge enter) begin
-	gameState <= ~gameState;
+	if (gameState == startState)
+		gameState <= playState;
 end
 
 always @ (posedge l_arrow) begin
-	l_score <= l_score + 1;
+	if (gameState == playState)
+		l_score <= l_score + 1;
 end
 
 always @ (posedge r_arrow) begin
-	r_score <= r_score + 1;
+	if (gameState == playState)
+		r_score <= r_score + 1;
 end
 
 always @ (posedge u_arrow) begin
-	u_score <= u_score + 1;
+	if (gameState == playState)
+		u_score <= u_score + 1;
+	else if (gameState == startState) begin
+		if (stageState == stage1)
+			stageState <= stage3;
+		else if (stageState == stage2)
+			stageState <= stage1;
+		else //if (stageState == stage3)
+			stageState <= stage2;
+	end
 end
 
 always @ (posedge d_arrow) begin
-	d_score <= d_score + 1;
+	if (gameState == playState)
+		d_score <= d_score + 1;
+	else if (gameState == startState) begin
+		if (stageState == stage1)
+			stageState <= stage2;
+		else if (stageState == stage2)
+			stageState <= stage3;
+		else //if (stageState == stage3)
+			stageState <= stage1;
+	end
 end
 
 always @ (hc, vc) begin
 	//start screen
-	if (gameState == 0) begin
+	if (gameState == startState) begin
 		drawStart();
 	end
 	//game mode
-	else begin
+	else if (gameState == playState) begin
 		 // arrow selection area
 		if ((vc <= 205 && vc > 200) || (vc <= 290 && vc > 285)) begin
 			red = 3'b111;
