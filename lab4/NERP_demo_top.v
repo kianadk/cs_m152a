@@ -43,6 +43,7 @@ wire enter;
 wire pclk;
 wire sclk;
 wire bclk;
+wire sec_clk;
 
 // disable the 7-segment decimal points
 assign dp = 1;
@@ -52,7 +53,8 @@ clockdiv U1(
 	.clk(clk),
 	.pclk(pclk),
     .sclk(sclk),
-	 .bclk(bclk)
+	 .bclk(bclk),
+	 .sec_clk(sec_clk)
 );
 
 // VGA controller
@@ -73,7 +75,8 @@ vga640x480 U3(
    .u_rand(u_rand),
    .l_rand(l_rand),
    .r_rand(r_rand),
-	.bclk(bclk)
+	.bclk(bclk),
+	.sec_clk(sec_clk)
 );
 
 debouncer e_debouncer(

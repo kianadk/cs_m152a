@@ -19,6 +19,7 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 module vga640x480(
+	input wire sec_clk,
 	input wire pclk,			//pixel clock: 25MHz
     input wire [2:0] decode,
 	 input wire l_arrow,
@@ -37,11 +38,16 @@ module vga640x480(
 	output wire [2:0] green, //green vga output
 	output wire [1:0] blue	//blue vga output
 	);
+	
+parameter stage1 = 2'b00;
+parameter stage2 = 2'b01;
+parameter stage3 = 2'b10;
+wire [1:0] stageState;
 
 // video structure constants
 parameter hpixels = 800;// horizontal pixels per line
 parameter vlines = 521; // vertical lines per frame
-parameter frames = 200; // number of frames for video
+parameter frames = 300; // number of frames for video
 parameter hpulse = 96; 	// hsync pulse length
 parameter vpulse = 2; 	// vsync pulse length
 parameter hbp = 144; 	// end of horizontal back porch
@@ -56,14 +62,14 @@ reg [9:0] hc;
 reg [9:0] vc;
 
 // register for storing the frame counter
-reg [7:0] fc;
+reg [8:0] fc;
 
-reg [7:0] d_fc;
+reg [8:0] d_fc;
 reg d_visible;
 reg [9:0] d_vc;
 reg [9:0] d_hc;
 
-reg [7:0] u_fc, l_fc, r_fc;
+reg [8:0] u_fc, l_fc, r_fc;
 reg u_visible, l_visible, r_visible;
 reg [9:0] u_vc, l_vc, r_vc;
 reg [9:0] u_hc, l_hc, r_hc;
@@ -104,8 +110,14 @@ end
 
 always @ (posedge pclk) begin
 	if (d_visible == 1 && vc == d_vc && hc == d_hc) begin
-		if (d_fc < frames - 1)
-			d_fc <= d_fc + 4;
+		if (d_fc < frames - 1) begin
+			if (stageState == stage1)
+				d_fc <= d_fc + 1;
+			else if (stageState == stage2)
+				d_fc <= d_fc + 2;
+			else //if (stageState == stage3)
+				d_fc <= d_fc + 4;
+		end
 		else begin
 			d_visible <= 0;
 		end
@@ -121,8 +133,14 @@ end
 
 always @ (posedge pclk) begin
 	if (u_visible == 1 && vc == u_vc && hc == u_hc) begin
-		if (u_fc < frames - 1)
-			u_fc <= u_fc + 1;
+		if (u_fc < frames - 1) begin
+			if (stageState == stage1)
+				u_fc <= u_fc + 1;
+			else if (stageState == stage2)
+				u_fc <= u_fc + 2;
+			else //if (stageState == stage3)
+				u_fc <= u_fc + 4;
+		end
 		else begin
 			u_visible <= 0;
 		end
@@ -139,8 +157,14 @@ end
 //left
 always @ (posedge pclk) begin
 	if (l_visible == 1 && vc == l_vc && hc == l_hc) begin
-		if (l_fc < frames - 1)
-			l_fc <= l_fc + 1;
+		if (l_fc < frames - 1) begin
+			if (stageState == stage1)
+				l_fc <= l_fc + 1;
+			else if (stageState == stage2)
+				l_fc <= l_fc + 2;
+			else //if (stageState == stage3)
+				l_fc <= l_fc + 4;
+		end
 		else begin
 			l_visible <= 0;
 		end
@@ -157,8 +181,14 @@ end
 //right
 always @ (posedge pclk) begin
 	if (r_visible == 1 && vc == r_vc && hc == r_hc) begin
-		if (r_fc < frames - 1)
-			r_fc <= r_fc + 1;
+		if (r_fc < frames - 1) begin
+			if (stageState == stage1)
+				r_fc <= r_fc + 1;
+			else if (stageState == stage2)
+				r_fc <= r_fc + 2;
+			else //if (stageState == stage3)
+				r_fc <= r_fc + 4;
+		end
 		else begin
 			r_visible <= 0;
 		end
@@ -179,6 +209,8 @@ assign hsync = (hc < hpulse) ? 0:1;
 assign vsync = (vc < vpulse) ? 0:1;
 
 down_arrow _down_arrow(
+	.stageState(stageState),
+	.sec_clk(sec_clk),
 	.bclk(bclk),
    .decode(decode),
 	.l_arrow(l_arrow),
