@@ -34,7 +34,7 @@ module LFSR_tb;
 	// Instantiate the Unit Under Test (UUT)
 	LFSR uut (
 		.clk(clk), 
-		.rand(rand),
+		.rand(rand)
 	);
 
 	initial begin

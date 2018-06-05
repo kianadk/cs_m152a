@@ -26,6 +26,10 @@ module clockdiv(
 	 output wire sec_clk
 );
 
+initial begin
+ counter <= 0;
+ end
+
 // 17-bit counter variable
 reg [31:0] counter;
 

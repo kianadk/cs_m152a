@@ -25,7 +25,7 @@
 module game_tb;
 
 	// Inputs
-	reg sclk;
+	reg sec_clk;
 	reg [2:0] decode;
 	reg [9:0] hc;
 	reg [9:0] vc;
@@ -54,7 +54,7 @@ module game_tb;
 
 	// Instantiate the Unit Under Test (UUT)
 	down_arrow uut (
-		.sclk(sclk), 
+		.sec_clk(sec_clk), 
 		.decode(decode), 
 		.hc(hc), 
 		.vc(vc), 
@@ -82,7 +82,7 @@ module game_tb;
 
 	initial begin
 		// Initialize Inputs
-		sclk = 0;
+		sec_clk = 0;
 		decode = 0;
 		hc = 0;
 		vc = 0;
@@ -112,7 +112,7 @@ module game_tb;
 	end
 	
 	always begin
-		#1 sclk = !sclk;
+		#1 sec_clk = !sec_clk;
 		#100 decode = !decode;
 	end
       
